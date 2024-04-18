@@ -1,0 +1,9 @@
+.mainScreenContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.leftContainer {
+    display: flex;
+    flex-direction: column;
+}

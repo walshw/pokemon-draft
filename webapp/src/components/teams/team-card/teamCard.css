@@ -1,0 +1,17 @@
+.teamContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.pointContainer {
+    display: flex;
+    flex-direction: column;
+    font-size: smaller;
+}
+
+.playerInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
