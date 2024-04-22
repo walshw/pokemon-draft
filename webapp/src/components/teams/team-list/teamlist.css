@@ -1,0 +1,8 @@
+.teamsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.teamsContainer > * {
+    margin: 8px;
+}
