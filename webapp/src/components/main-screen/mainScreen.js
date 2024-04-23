@@ -27,8 +27,6 @@ const MainScreen = () => {
         socket.on("teamsList", (data) => setTeams(data));
         socket.on("monsList", (data) => setMons(data));
         socket.on("pickingTeam", (data) => setPickingTeamId(data));
-        // Do we have all these sockets for the data, or can we collapse data into a state socket
-        // Just keep it all in one socket?
         
         return () => {
             socket.off("connect", () => setIsConnected(true));
