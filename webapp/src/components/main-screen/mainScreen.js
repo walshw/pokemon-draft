@@ -18,14 +18,15 @@ const MainScreen = () => {
     const [data, setData] = useState();
     const [pickingTeamId, setPickingTeamId] = useState();
     const [teams, setTeams] = useState([]);
+    const [mons, setMons] = useState([]);
 
     useEffect(() => {
         socket.connect();
         socket.on("connect", () => setIsConnected(true));
         socket.on("disconnect", () => setIsConnected(false));
-        socket.on("serverMessage", (data) => console.log(data));
         socket.on("teamsList", (data) => setTeams(data));
-        socket.on("pickingTeamChange", (data) => setPickingTeamId(data));
+        socket.on("monsList", (data) => setMons(data));
+        socket.on("pickingTeam", (data) => setPickingTeamId(data));
         // Do we have all these sockets for the data, or can we collapse data into a state socket
         // Just keep it all in one socket?
         
@@ -42,7 +43,7 @@ const MainScreen = () => {
             <SlBadge variant={isConnect ? "success": "neutral"}>Status</SlBadge>
             <Title />
             <SearchBar />
-            <PokemonList />
+            <PokemonList mons={mons}/>
         </div>
         <div>
             <TeamList teams={teams} pickingTeamId={pickingTeamId}/>
