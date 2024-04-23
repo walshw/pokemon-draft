@@ -16,25 +16,27 @@ const mons = [
 ];
 
 const renderMons = () => {
-  return mons.map(mon =>
-    <>
-      <tr>
-        <td>{mon.name}</td>
-        <td>{mon.type}</td>
-        <td>{mon.name}</td>
-      </tr>
-    </>);
+  return mons.map((mon, idx) =>
+    <tr key={idx}>
+      <td>{mon.name}</td>
+      <td>{mon.type}</td>
+      <td>{mon.name}</td>
+    </tr>);
 }
 
 const PokemonList = () => {
   return <SlCard>
-    <table class="poketable">
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Cost</th>
-      </tr>
-      {renderMons()}
+    <table className="poketable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        {renderMons()}
+      </tbody>
     </table>
   </SlCard>;
 }
