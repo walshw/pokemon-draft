@@ -6,14 +6,16 @@ import SlAvatar from '@shoelace-style/shoelace/dist/react/avatar';
 
 import "./teamCard.css";
 
-const TeamCard = (team) => {
+const TeamCard = (props) => {
+    const { team } = props;
+
     return <>
         <SlCard>
             <div className="teamContainer">
                 <div className="playerInfo">
                     <SlAvatar image="https://i.redd.it/zu8rpygrxbf31.jpg"></SlAvatar>
                     <div>{team.name}</div>
-                    <SlBadge variant="success">Picking</SlBadge>
+                    <SlBadge variant={props.isPicking ? "success" : "neutral"}>{team.pickOrder}</SlBadge>
                 </div>
 
                 <div>

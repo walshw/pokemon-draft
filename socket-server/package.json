@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "socket.io": "^4.7.5"
+  },
+  "name": "socketserver",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module"
+}
