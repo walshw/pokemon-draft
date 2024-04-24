@@ -5,9 +5,9 @@
 import { useEffect, useState } from "react";
 
 import SlBadge from '@shoelace-style/shoelace/dist/react/badge';
-import PokemonList from "../pokemon-list/pokemonlist";
-import SearchBar from "../search-bar/searchbar";
-import TeamList from "../teams/team-list/teamlist";
+import PokemonList from "../pokemon-list/pokemonList";
+import SearchBar from "../search-bar/searchBar";
+import TeamList from "../teams/team-list/teamList";
 import Title from "../title/title";
 import { socket } from "../../socket";
 import "./mainScreen.css";

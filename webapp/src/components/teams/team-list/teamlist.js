@@ -1,5 +1,5 @@
 import SlCard from '@shoelace-style/shoelace/dist/react/card';
-import TeamCard from '../team-card/teamcard';
+import TeamCard from '../team-card/teamCard';
 
 import "./teamlist.css";
 
