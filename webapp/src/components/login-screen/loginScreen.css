@@ -1,0 +1,25 @@
+.pfpContainer {
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-wrap: wrap;
+    width: 640px;
+    max-height: 300px;
+    justify-content: center;
+}
+
+.pfp {
+    margin: 2px;
+}
+
+.gungus {
+    display: table-caption;
+}
+
+.loginScreenContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

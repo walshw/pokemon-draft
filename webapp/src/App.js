@@ -1,19 +1,24 @@
-import Pokemonlist from './components/pokemon-list/pokemonlist';
 import '@shoelace-style/shoelace/dist/themes/light.css';
 import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path';
-import SearchBar from './components/search-bar/searchbar';
-import TeamCard from './components/teams/team-card/teamcard';
-import TeamList from './components/teams/team-list/teamlist';
+import SearchBar from './components/search-bar/searchBar';
+import TeamCard from './components/teams/team-card/teamCard';
+import TeamList from './components/teams/team-list/teamList';
 import Title from './components/title/title';
 import MainScreen from './components/main-screen/mainScreen';
+import LoginScreen from './components/login-screen/loginScreen';
 
 // We can set this to NOT use a CDN but instead copy the nodemodule assets into ../public
 // https://shoelace.style/frameworks/react
 setBasePath('https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/');
 
 function App() {
+
+  // TODO: We gotta rename these higher order components
+  // * LoginScreen: I treat it as a login auth-wall (it totally COULD be )
   return (
-    <MainScreen></MainScreen>
+    <LoginScreen>
+      <MainScreen/>
+    </LoginScreen>
   );
 }
 
