@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import SlBadge from '@shoelace-style/shoelace/dist/react/badge';
 import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlButton from '@shoelace-style/shoelace/dist/react/button';
-import PokemonList from "../pokemon-list/pokemonList";
+import PokemonList from "../pokemon/pokemon-list/pokemonList";
 import SearchBar from "../search-bar/searchBar";
 import TeamList from "../teams/team-list/teamList";
 import Title from "../title/title";
