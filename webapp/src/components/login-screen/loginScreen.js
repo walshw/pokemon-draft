@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlInput from '@shoelace-style/shoelace/dist/react/input';
+import SlButton from '@shoelace-style/shoelace/dist/react/button';
 import pfps from '../../data/images.json';
 
 import "./loginScreen.css";
@@ -47,6 +48,7 @@ function LoginScreen(props) {
             <SlInput label="Search pfps" onSlInput={(e) => setPfpFilter(e.target.value)}></SlInput>
             {renderImages()}
             {renderSelectedPfp()}
+            <SlButton onClick={() => setIsloggedIn(true)}>PLAY</SlButton>
         </div>
     }
 
