@@ -48,7 +48,7 @@ function LoginScreen(props) {
             <SlInput label="Search pfps" onSlInput={(e) => setPfpFilter(e.target.value)}></SlInput>
             {renderImages()}
             {renderSelectedPfp()}
-            <SlButton onClick={() => setIsloggedIn(true)}>PLAY</SlButton>
+            <SlButton onClick={() => setIsloggedIn(true)} disabled={!chosenPfp}>PLAY</SlButton>
         </div>
     }
 
