@@ -1,9 +1,9 @@
-import Pokemonlist from './components/pokemon-list/pokemonlist';
+import Pokemonlist from './components/pokemon-list/pokemonList';
 import '@shoelace-style/shoelace/dist/themes/light.css';
 import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path';
-import SearchBar from './components/search-bar/searchbar';
-import TeamCard from './components/teams/team-card/teamcard';
-import TeamList from './components/teams/team-list/teamlist';
+import SearchBar from './components/search-bar/searchBar';
+import TeamCard from './components/teams/team-card/teamCard';
+import TeamList from './components/teams/team-list/teamList';
 import Title from './components/title/title';
 import MainScreen from './components/main-screen/mainScreen';
 

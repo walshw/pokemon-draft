@@ -5,6 +5,8 @@
 import { useEffect, useState } from "react";
 
 import SlBadge from '@shoelace-style/shoelace/dist/react/badge';
+import SlCard from '@shoelace-style/shoelace/dist/react/card';
+import SlButton from '@shoelace-style/shoelace/dist/react/button';
 import PokemonList from "../pokemon-list/pokemonList";
 import SearchBar from "../search-bar/searchBar";
 import TeamList from "../teams/team-list/teamList";
@@ -13,6 +15,9 @@ import { socket } from "../../socket";
 import "./mainScreen.css";
 
 const MainScreen = () => {
+    const roomCode = "abc124";
+    const myId = 0;
+
     // https://socket.io/how-to/use-with-react
     const [isConnect, setIsConnected] = useState(socket.connected);
     const [data, setData] = useState();
@@ -27,7 +32,7 @@ const MainScreen = () => {
         socket.on("teamsList", (data) => setTeams(data));
         socket.on("monsList", (data) => setMons(data));
         socket.on("pickingTeam", (data) => setPickingTeamId(data));
-        
+
         return () => {
             socket.off("connect", () => setIsConnected(true));
             socket.off("disconnect", () => setIsConnected(false));
@@ -38,13 +43,18 @@ const MainScreen = () => {
 
     return <div className="mainScreenContainer">
         <div className="leftContainer">
-            <SlBadge variant={isConnect ? "success": "neutral"}>Status</SlBadge>
+            <div>
+                <SlBadge variant={isConnect ? "success" : "neutral"}>Status</SlBadge>
+                <SlButton onClick={() => {socket.emit("startGame")}}>Start</SlButton>
+                <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
+                <SlButton onClick={() => socket.emit("pick", 43)}>Pick</SlButton>
+            </div>
             <Title />
             <SearchBar />
-            <PokemonList mons={mons}/>
+            <PokemonList mons={mons} />
         </div>
         <div>
-            <TeamList teams={teams} pickingTeamId={pickingTeamId}/>
+            <TeamList teams={teams} pickingTeamId={pickingTeamId} />
         </div>
     </div>;
 }

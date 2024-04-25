@@ -1,6 +1,6 @@
 import SlCard from '@shoelace-style/shoelace/dist/react/card';
 
-import "./pokemonlist.css"
+import "./pokemonList.css"
 
 const renderMons = (mons) => {
   return mons.map((mon, idx) =>
