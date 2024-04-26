@@ -20,8 +20,7 @@ const MainScreen = () => {
 
     // https://socket.io/how-to/use-with-react
     const [isConnect, setIsConnected] = useState(socket.connected);
-    const [data, setData] = useState();
-    const [pickingTeamId, setPickingTeamId] = useState();
+    const [pickingTeamId, setPickingTeamId] = useState(null);
     const [teams, setTeams] = useState([]);
     const [mons, setMons] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
@@ -40,7 +39,6 @@ const MainScreen = () => {
         return () => {
             socket.off("connect", () => setIsConnected(true));
             socket.off("disconnect", () => setIsConnected(false));
-            socket.off("reactMessage", setData);
             socket.disconnect();
         };
     }, []);
@@ -65,26 +63,33 @@ const MainScreen = () => {
     const cancelPokemon = () => {
         setSelectedPokemon(null);
     };
-    
 
-    return <div className="mainScreenContainer">
-        <div className="leftContainer">
-            <div>
-                <SlBadge variant={isConnect ? "success" : "neutral"}>Status</SlBadge>
-                <SlBadge variant="primary">{pickingTeamId}</SlBadge>
-                <SlButton onClick={() => {socket.emit("startGame")}}>Start</SlButton>
-                <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
-                <SlButton onClick={() => socket.emit("pick", 43)}>Pick</SlButton>
+    const renderMainScreen = () => {
+        // if (!pickingTeamId) {
+        //     return <div>Please Wait for the game to start</div>;
+        // }
+
+        return <div className="mainScreenContainer">
+            <div className="leftContainer">
+                <div>
+                    <SlBadge variant={isConnect ? "success" : "neutral"}>Status</SlBadge>
+                    <SlBadge variant="primary">{pickingTeamId}</SlBadge>
+                    <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
+                    <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
+                    <SlButton onClick={() => socket.emit("pick", 43)}>Pick</SlButton>
+                </div>
+                <Title />
+                <SearchBar />
+                <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />
+                <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId}/>
             </div>
-            <Title />
-            <SearchBar />
-            <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}/>
-            <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon}/>
-        </div>
-        <div>
-            <TeamList teams={teams} pickingTeamId={pickingTeamId} />
-        </div>
-    </div>;
+            <div>
+                <TeamList teams={teams} pickingTeamId={pickingTeamId} />
+            </div>
+        </div>;
+    }
+
+    return renderMainScreen();
 }
 
 export default MainScreen;

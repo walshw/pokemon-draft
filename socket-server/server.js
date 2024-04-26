@@ -16,24 +16,27 @@ const io = new Server({
 });
 
 // Teams that CANNOT pick will be have their compelete key set to true during pick rotation
-const teams = [
-    { id: 0, name: "William", pickOrder: 1, points:999, complete: false, mons: [] },
-    { id: 1, name: "Billy", pickOrder: 3, points:0, complete: false, mons: [] },
-    { id: 2, name: "Guillermo", pickOrder: 2, points:0, complete: false, mons: [] },
-    { id: 3, name: "Wilhelm", pickOrder: 4, points:99, complete: false, mons: [] },
-    { id: 4, name: "Guglielmo", pickOrder: 6, points:0, complete: false, mons: [] },
+let teamsDefault = [
+    { id: 0, name: "William", pickOrder: 1, points: 999, complete: false, mons: [] },
+    { id: 1, name: "Billy", pickOrder: 3, points: 0, complete: false, mons: [] },
+    { id: 2, name: "Guillermo", pickOrder: 2, points: 0, complete: false, mons: [] },
+    { id: 3, name: "Wilhelm", pickOrder: 4, points: 99, complete: false, mons: [] },
+    { id: 4, name: "Guglielmo", pickOrder: 6, points: 0, complete: false, mons: [] },
 ];
 
 // TODO: Grab the list of pokemon and import it properly AT SOME POINT NOT RIGHT NOW DONT GET DISTRACT FROM THE CORE LOOP! --WWALSH
-const mons = [
-    { id: 0, name: "Goku", type: "Saiyan", picked: false , cost: 99 },
-    { id: 1, name: "Pikachu", type: "Electric", picked: false , cost: 5 },
-    { id: 2, name: "Charmander", type: "Fire", picked: false , cost: 3 },
-    { id: 3, name: "Aipom", type: "Monkey", picked: false , cost: 12 },
-    { id: 4, name: "Minun", type: "Electric", picked: false , cost: 6 },
-    { id: 5, name: "Plusle", type: "Electric", picked: false , cost: 6 },
-    { id: 6, name: "Mewtwo", type: "Psychic", picked: false , cost: 98 },
+const monsDefault = [
+    { id: 0, name: "Goku", type: "Saiyan", picked: false, cost: 99 },
+    { id: 1, name: "Pikachu", type: "Electric", picked: false, cost: 5 },
+    { id: 2, name: "Charmander", type: "Fire", picked: false, cost: 3 },
+    { id: 3, name: "Aipom", type: "Monkey", picked: false, cost: 12 },
+    { id: 4, name: "Minun", type: "Electric", picked: false, cost: 6 },
+    { id: 5, name: "Plusle", type: "Electric", picked: false, cost: 6 },
+    { id: 6, name: "Mewtwo", type: "Psychic", picked: false, cost: 98 },
 ];
+
+let mons = structuredClone(monsDefault);
+let teams = structuredClone(teamsDefault);
 
 io.on("connection", (socket) => {
     const emitGameState = (room) => {
@@ -51,6 +54,11 @@ io.on("connection", (socket) => {
 
     socket.on("startGame", () => {
         // ? pull the roomName from some payload in the socket ?
+
+        // Reset teams
+        mons = structuredClone(monsDefault);
+        teams = structuredClone(teamsDefault);
+
         pickingTeamId = teams[0].id;
         emitGameState(roomName);
     });
@@ -58,6 +66,11 @@ io.on("connection", (socket) => {
     socket.on("stopGame", () => {
         // Remove all game listeners
         // Cleanup etc.
+        mons = structuredClone(monsDefault);
+        teams = structuredClone(teamsDefault);
+
+        pickingTeamId = teams[0].id;
+        emitGameState(roomName);
         socket.offAny();
     });
 
@@ -90,16 +103,16 @@ io.on("connection", (socket) => {
             callback(false);
             return false;
         }
-        
+
         playerTeam.points = playerTeam.points - selectedMon.cost;
         selectedMon.picked = true;
         playerTeam.mons.push(selectedMon);
-        
+
         // If the team is full OR can no longer pick any more mons, move them to the complete teams
         if (!(playerTeam.mons.length < 13 || (playerTeam.points > 0 && mons.some(mon => mon.cost >= playerTeam.points)))) {
             playerTeam.complete = true;
         }
-        
+
         // Check for any other completed teams?
         // code smell???
         updateCompletedTeams();
@@ -142,7 +155,7 @@ const canTeamStillPick = (team) => {
 
 const getNextTeamId = (currentTeamId) => {
     let myTeams = teams.filter(team => !team.complete);
-    myTeams.sort((a,b) => a.pickOrder - b.pickOrder);
+    myTeams.sort((a, b) => a.pickOrder - b.pickOrder);
     const teamIndex = myTeams.findIndex(team => team.id === currentTeamId);
     const indexForNextTeam = myTeams.length > 1 ? (teamIndex + 1) % myTeams.length : 0;
     const nextTeamId = myTeams[indexForNextTeam].id;
