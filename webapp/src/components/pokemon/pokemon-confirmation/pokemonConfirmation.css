@@ -1,0 +1,11 @@
+tbody > tr:hover {
+    background-color: yellow;
+}
+
+.selectedMon {
+    background-color: lightblue;
+}
+
+.selectedMon:hover {
+    background-color: lightblue;
+}

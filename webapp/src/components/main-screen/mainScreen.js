@@ -5,7 +5,6 @@
 import { useEffect, useState } from "react";
 
 import SlBadge from '@shoelace-style/shoelace/dist/react/badge';
-import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlButton from '@shoelace-style/shoelace/dist/react/button';
 import PokemonList from "../pokemon/pokemon-list/pokemonList";
 import SearchBar from "../search-bar/searchBar";
@@ -13,6 +12,7 @@ import TeamList from "../teams/team-list/teamList";
 import Title from "../title/title";
 import { socket } from "../../socket";
 import "./mainScreen.css";
+import PokemonConfirmation from "../pokemon/pokemon-confirmation/pokemonConfirmation";
 
 const MainScreen = () => {
     const roomCode = "abc124";
@@ -24,6 +24,9 @@ const MainScreen = () => {
     const [pickingTeamId, setPickingTeamId] = useState();
     const [teams, setTeams] = useState([]);
     const [mons, setMons] = useState([]);
+    const [selectedPokemon, setSelectedPokemon] = useState(null);
+    const [error, setError] = useState(false);
+    const [draftComplete, setDraftComplete] = useState(false);
 
     useEffect(() => {
         socket.connect();
@@ -32,6 +35,7 @@ const MainScreen = () => {
         socket.on("teamsList", (data) => setTeams(data));
         socket.on("monsList", (data) => setMons(data));
         socket.on("pickingTeam", (data) => setPickingTeamId(data));
+        socket.on("draftComplete", (data) => setDraftComplete(data));
 
         return () => {
             socket.off("connect", () => setIsConnected(true));
@@ -41,17 +45,41 @@ const MainScreen = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (draftComplete) {
+            alert("OHHH BABY");
+        }
+    }, [draftComplete]);
+
+    const confirmPokemon = () => {
+        socket.emitWithAck("pick", selectedPokemon.id).then((resp) => {
+            if (!resp) {
+                alert("An error has occured with your poke-confirmation");
+                return;
+            }
+
+            // On success, next player turn
+        });
+    };
+
+    const cancelPokemon = () => {
+        setSelectedPokemon(null);
+    };
+    
+
     return <div className="mainScreenContainer">
         <div className="leftContainer">
             <div>
                 <SlBadge variant={isConnect ? "success" : "neutral"}>Status</SlBadge>
+                <SlBadge variant="primary">{pickingTeamId}</SlBadge>
                 <SlButton onClick={() => {socket.emit("startGame")}}>Start</SlButton>
                 <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
                 <SlButton onClick={() => socket.emit("pick", 43)}>Pick</SlButton>
             </div>
             <Title />
             <SearchBar />
-            <PokemonList mons={mons} />
+            <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}/>
+            <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon}/>
         </div>
         <div>
             <TeamList teams={teams} pickingTeamId={pickingTeamId} />

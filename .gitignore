@@ -1,1 +1,3 @@
 .vscode/settings.json
+/scraping/images/
+/scraping/node_modules/

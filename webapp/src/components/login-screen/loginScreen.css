@@ -10,7 +10,19 @@
 }
 
 .pfp {
-    margin: 2px;
+    padding: 2px;
+}
+
+.pfp:hover {
+    background-color: red;
+}
+
+.selectedPfp {
+    background-color: green;
+}
+
+.selectedPfp:hover {
+    background-color: green;
 }
 
 .gungus {
