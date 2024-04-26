@@ -40,7 +40,7 @@ const TeamCard = (props) => {
 
                 <div className="pointContainer">
                     <SlProgressBar value={45} />
-                    45 of 110 points
+                    {team.points}
                 </div>
             </div>
         </SlCard>

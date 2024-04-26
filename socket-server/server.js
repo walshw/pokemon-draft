@@ -40,9 +40,12 @@ io.on("connection", (socket) => {
         io.to(room).emit("teamsList", teams);
         io.to(room).emit("monsList", mons);
         io.to(room).emit("pickingTeam", pickingTeamId);
+        io.to(room).emit("draftComplete", draftComplete);
     }
 
     socket.join(roomName);
+
+    let draftComplete = false;
 
     let pickingTeamId = teams[0].id;
 
@@ -99,13 +102,18 @@ io.on("connection", (socket) => {
             playerTeam.complete = true;
         }
         
+        // Check for any other completed teams?
+        // code smell???
         updateCompletedTeams();
 
         const nextTeamId = getNextTeamId(pickingTeamId);
         pickingTeamId = nextTeamId;
 
-        // Check for any other completed teams?
-        // code smell???
+        // is game done?
+        if (!mons.some(mon => !mon.picked) || !teams.some(team => !team.complete)) {
+            draftComplete = true;
+            console.log("draft complete");
+        }
 
         emitGameState(roomName);
 

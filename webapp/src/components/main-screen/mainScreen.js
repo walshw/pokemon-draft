@@ -45,6 +45,12 @@ const MainScreen = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (draftComplete) {
+            alert("OHHH BABY");
+        }
+    }, [draftComplete]);
+
     const confirmPokemon = () => {
         socket.emitWithAck("pick", selectedPokemon.id).then((resp) => {
             if (!resp) {
