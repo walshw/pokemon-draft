@@ -13,10 +13,14 @@ import Title from "../title/title";
 import { socket } from "../../socket";
 import "./mainScreen.css";
 import PokemonConfirmation from "../pokemon/pokemon-confirmation/pokemonConfirmation";
+import Lobby from "../lobby/lobby";
 
-const MainScreen = () => {
-    const roomCode = "abc124";
-    const myId = 0;
+const MainScreen = (props) => {
+    // I think the ID should be stored in local storage with a random value
+    // The name they put in should just be a display name
+    
+    const myId = props.userId;
+    const isAdmin = props.userId === "wgb";
 
     // https://socket.io/how-to/use-with-react
     const [isConnect, setIsConnected] = useState(socket.connected);
@@ -26,8 +30,10 @@ const MainScreen = () => {
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [error, setError] = useState(false);
     const [draftComplete, setDraftComplete] = useState(false);
+    const [connections, setConnections] = useState([]);
 
     useEffect(() => {
+        socket.auth = { userId: props.userId }
         socket.connect();
         socket.on("connect", () => setIsConnected(true));
         socket.on("disconnect", () => setIsConnected(false));
@@ -35,6 +41,9 @@ const MainScreen = () => {
         socket.on("monsList", (data) => setMons(data));
         socket.on("pickingTeam", (data) => setPickingTeamId(data));
         socket.on("draftComplete", (data) => setDraftComplete(data));
+        socket.on("connections", (data) => {
+            setConnections(data);
+        });
 
         return () => {
             socket.off("connect", () => setIsConnected(true));
@@ -65,9 +74,9 @@ const MainScreen = () => {
     };
 
     const renderMainScreen = () => {
-        // if (!pickingTeamId) {
-        //     return <div>Please Wait for the game to start</div>;
-        // }
+        if (!pickingTeamId && !isAdmin) {
+            return <Lobby connections={connections}></Lobby>
+        }
 
         return <div className="mainScreenContainer">
             <div className="leftContainer">
@@ -76,15 +85,15 @@ const MainScreen = () => {
                     <SlBadge variant="primary">{pickingTeamId}</SlBadge>
                     <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
                     <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
-                    <SlButton onClick={() => socket.emit("pick", 43)}>Pick</SlButton>
                 </div>
                 <Title />
                 <SearchBar />
                 <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />
-                <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId}/>
+                <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId} />
             </div>
             <div>
                 <TeamList teams={teams} pickingTeamId={pickingTeamId} />
+                <Lobby connections={connections} />
             </div>
         </div>;
     }

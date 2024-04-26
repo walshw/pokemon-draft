@@ -62,7 +62,7 @@ function LoginScreen(props) {
 
     const renderLoginForm = () => {
         return <div className="loginScreenContainer">
-            <SlInput label="What's your name?"></SlInput>
+            <SlInput label="What's your name?" onSlInput={(e) => props.setUserId(e.target.value)}></SlInput>
             <SlInput label="Search pfps" onSlInput={(e) => setPfpFilter(e.target.value)}></SlInput>
             {renderImages()}
             {renderSelectedPfp()}

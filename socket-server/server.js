@@ -4,7 +4,6 @@ import { configDotenv } from "dotenv";
 configDotenv();
 
 const port = 10310;
-const roomName = "demoRoom";
 
 const teamMonMin = 10;
 const teamMonMax = 13;
@@ -23,6 +22,7 @@ let teamsDefault = [
     { id: 3, name: "Wilhelm", pickOrder: 4, points: 99, complete: false, mons: [] },
     { id: 4, name: "Guglielmo", pickOrder: 6, points: 0, complete: false, mons: [] },
 ];
+teamsDefault = [];
 
 // TODO: Grab the list of pokemon and import it properly AT SOME POINT NOT RIGHT NOW DONT GET DISTRACT FROM THE CORE LOOP! --WWALSH
 const monsDefault = [
@@ -38,26 +38,52 @@ const monsDefault = [
 let mons = structuredClone(monsDefault);
 let teams = structuredClone(teamsDefault);
 
+let connections = [];
+let pickingTeamId = null;
+
 io.on("connection", (socket) => {
-    const emitGameState = (room) => {
-        io.to(room).emit("teamsList", teams);
-        io.to(room).emit("monsList", mons);
-        io.to(room).emit("pickingTeam", pickingTeamId);
-        io.to(room).emit("draftComplete", draftComplete);
+    const userId = socket.handshake.auth.userId;
+    const roomName = "demoRoom";
+
+    if (userId === null) {
+        return;
+    }
+
+    const emitGameState = () => {
+        io.to(roomName).emit("teamsList", teams);
+        io.to(roomName).emit("monsList", mons);
+        io.to(roomName).emit("pickingTeam", pickingTeamId);
+        io.to(roomName).emit("draftComplete", draftComplete);
+        io.to(roomName).emit("connections", connections);
     }
 
     socket.join(roomName);
+    console.log(`User: ${socket.handshake.auth.userId} | CONNECTED | IP: ${socket.handshake.address}`);
+
+    connections.push({ address: socket.handshake.address, id: socket.handshake.auth.userId });
+    io.to(roomName).emit("connections", connections);
 
     let draftComplete = false;
 
-    let pickingTeamId = teams[0].id;
-
     socket.on("startGame", () => {
         // ? pull the roomName from some payload in the socket ?
-
+        console.log("starts");
         // Reset teams
         mons = structuredClone(monsDefault);
         teams = structuredClone(teamsDefault);
+
+        connections.forEach(connection => {
+            teams.push(
+                {
+                    id: connection.id,
+                    name: connection.id,
+                    pickOrder: 1,
+                    points: 999,
+                    complete: false,
+                    mons: []
+                },
+            )
+        })
 
         pickingTeamId = teams[0].id;
         emitGameState(roomName);
@@ -69,7 +95,7 @@ io.on("connection", (socket) => {
         mons = structuredClone(monsDefault);
         teams = structuredClone(teamsDefault);
 
-        pickingTeamId = teams[0].id;
+        pickingTeamId = null;
         emitGameState(roomName);
         socket.offAny();
     });
@@ -82,9 +108,13 @@ io.on("connection", (socket) => {
 
         // Pulling team id from the id set in socket.js
         // ! COMMENTING FOR LOCAL TESTING
-        // if (Number(socket.handshake.auth.userId) !== pickingTeamId) {
-        //     return;
-        // }
+        console.log(`U ${socket.handshake.auth.userId} | P ${pickingTeamId}`);
+
+        if (socket.handshake.auth.userId !== pickingTeamId + "") {
+            return;
+        }
+
+        console.log("?");
 
         const playerTeam = teams.find(team => team.id === pickingTeamId);
         const selectedMon = mons.find(mon => mon.id === monId);
@@ -129,7 +159,14 @@ io.on("connection", (socket) => {
         emitGameState(roomName);
 
         return callback(true);
-    })
+    });
+
+    socket.on("disconnect", () => {
+        connections = connections.filter(connection => connection.id !== socket.handshake.auth.userId);
+        console.log(`User: ${socket.handshake.auth.userId} | LEAVING | IP: ${socket.handshake.address}`);
+        io.to(roomName).emit("connections", connections);
+        socket._cleanup();
+    });
 });
 
 const updateCompletedTeams = () => {
@@ -141,7 +178,7 @@ const updateCompletedTeams = () => {
 }
 
 const canTeamStillPick = (team) => {
-    // BROKE OUT THIS BOOLEAN LOGIC FOR SANITY
+    // BROKE OUT THIS BOOLEAN LOGIC FOR SANITY 🤡
     if (team.mons.length >= 13) {
         return false;
     }
@@ -168,25 +205,6 @@ const getNextTeamId = (currentTeamId) => {
 
     return nextTeamId;
 }
-
-const playerCanStillPick = (player) => {
-    return player.mons.length < 13 || (player.points > 0 && mons.some(mon => mon.cost >= player.points));
-}
-
-const currentPlayerId = 0;
-
-const coreGameLoop = () => {
-    // Loop through each player
-
-    // - If the player is *able* to pick
-    // - - Set turn to this player
-    // - - Wait for player input (Is there a better)
-
-
-    // ? Do I have a game loop that broadcasts a gamestate to all the clients (assuming everyone is there and listening)
-    // * Or do I have the server be a gamestate, with listeners 
-}
-
 
 console.log("Listening on port: " + port);
 io.listen(port);
