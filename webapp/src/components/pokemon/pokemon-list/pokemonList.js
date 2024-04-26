@@ -3,7 +3,7 @@ import "./pokemonList.css"
 
 const PokemonList = (props) => {
   const renderMons = () => {
-    return props.mons.map((mon, idx) =>
+    return props.mons.filter(mon => !mon.picked).map((mon, idx) =>
       <tr
         key={idx}
         onClick={() => props.setSelectedPokemon(mon)} 

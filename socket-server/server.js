@@ -90,9 +90,7 @@ io.on("connection", (socket) => {
             callback(false);
             return false;
         }
-
-        console.log("Made it?");
-
+        
         playerTeam.points = playerTeam.points - selectedMon.cost;
         selectedMon.picked = true;
         playerTeam.mons.push(selectedMon);

@@ -8,22 +8,14 @@ import "./teamCard.css";
 
 const TeamCard = (props) => {
     const { team } = props;
-
     const teamMax = 13;
+    const pointMax = 110;
 
     const renderPokemonSlots = () => {
         const diff = teamMax - team.mons.length;
-
-        const tempSlots = [...team.mons, ...Array.from(diff)];
-
-        // if (tempSlots.length < teamMax - 1) {
-        //     tempSlots 
-
-        //     tempSlots.fill(null, tempSlots.length - 1, teamMax - 1);
-        // }
-
+        const tempSlots = [...team.mons, ...Array.from({length:diff})];
         return <div>
-            {tempSlots.map(slot => slot === null ? <SlIcon name="hexagon"/> : <SlIcon name="hexagon-fill" key={slot.id}/>)}
+            {tempSlots.map(slot => slot === undefined ? <SlIcon name="hexagon"/> : <SlIcon name="hexagon-fill" key={slot.id}/>)}
         </div>;
     }
 
@@ -40,7 +32,7 @@ const TeamCard = (props) => {
 
                 <div className="pointContainer">
                     <SlProgressBar value={45} />
-                    {team.points}
+                    {team.points} of {pointMax}
                 </div>
             </div>
         </SlCard>
