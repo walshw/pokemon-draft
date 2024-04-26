@@ -22,11 +22,29 @@ function LoginScreen(props) {
 
     }, [pfpFilter]);
 
+    const handleClick = (img) => {
+        if (chosenPfp && img.fileName === chosenPfp.fileName) {
+            setChosenPfp(null);
+            return;
+        }
+
+        setChosenPfp(img);
+    }
+
+    const getClassName = (img) => {
+        if (chosenPfp && img.fileName === chosenPfp.fileName) {
+            return "pfp selectedPfp";
+        }
+
+        return "pfp";
+    }
+
     const renderImages = () => {
         return <div className="pfpContainer">
-            {pfpState.map((img) => <SlCard className="pfp" onClick={() => setChosenPfp(img)}>
-                <img src={img.fileName} alt={img.fileName} />
-            </SlCard>)}
+            {pfpState.map((img) =>
+                <SlCard className={getClassName(img)} onClick={() => handleClick(img)}>
+                    <img src={img.fileName} alt={img.fileName} />
+                </SlCard>)}
         </div>;
     }
 
