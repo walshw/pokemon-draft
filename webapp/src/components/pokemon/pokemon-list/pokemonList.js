@@ -1,5 +1,4 @@
 import SlCard from '@shoelace-style/shoelace/dist/react/card';
-
 import "./pokemonList.css"
 
 const PokemonList = (props) => {

@@ -26,6 +26,7 @@ const MainScreen = () => {
     const [mons, setMons] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [error, setError] = useState(false);
+    const [draftComplete, setDraftComplete] = useState(false);
 
     useEffect(() => {
         socket.connect();
@@ -34,6 +35,7 @@ const MainScreen = () => {
         socket.on("teamsList", (data) => setTeams(data));
         socket.on("monsList", (data) => setMons(data));
         socket.on("pickingTeam", (data) => setPickingTeamId(data));
+        socket.on("draftComplete", (data) => setDraftComplete(data));
 
         return () => {
             socket.off("connect", () => setIsConnected(true));

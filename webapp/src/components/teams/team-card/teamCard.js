@@ -9,6 +9,24 @@ import "./teamCard.css";
 const TeamCard = (props) => {
     const { team } = props;
 
+    const teamMax = 13;
+
+    const renderPokemonSlots = () => {
+        const diff = teamMax - team.mons.length;
+
+        const tempSlots = [...team.mons, ...Array.from(diff)];
+
+        // if (tempSlots.length < teamMax - 1) {
+        //     tempSlots 
+
+        //     tempSlots.fill(null, tempSlots.length - 1, teamMax - 1);
+        // }
+
+        return <div>
+            {tempSlots.map(slot => slot === null ? <SlIcon name="hexagon"/> : <SlIcon name="hexagon-fill" key={slot.id}/>)}
+        </div>;
+    }
+
     return <>
         <SlCard>
             <div className="teamContainer">
@@ -18,14 +36,7 @@ const TeamCard = (props) => {
                     <SlBadge variant={props.isPicking ? "success" : "neutral"}>{team.pickOrder}</SlBadge>
                 </div>
 
-                <div>
-                    <SlIcon name="hexagon-fill"></SlIcon>
-                    <SlIcon name="hexagon-fill"></SlIcon>
-                    <SlIcon name="hexagon"></SlIcon>
-                    <SlIcon name="hexagon"></SlIcon>
-                    <SlIcon name="hexagon"></SlIcon>
-                    <SlIcon name="hexagon"></SlIcon>
-                </div>
+                {renderPokemonSlots()}
 
                 <div className="pointContainer">
                     <SlProgressBar value={45} />
