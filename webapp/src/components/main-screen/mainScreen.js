@@ -5,7 +5,6 @@
 import { useEffect, useState } from "react";
 
 import SlBadge from '@shoelace-style/shoelace/dist/react/badge';
-import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlButton from '@shoelace-style/shoelace/dist/react/button';
 import PokemonList from "../pokemon/pokemon-list/pokemonList";
 import SearchBar from "../search-bar/searchBar";
@@ -13,6 +12,7 @@ import TeamList from "../teams/team-list/teamList";
 import Title from "../title/title";
 import { socket } from "../../socket";
 import "./mainScreen.css";
+import PokemonConfirmation from "../pokemon/pokemon-confirmation/pokemonConfirmation";
 
 const MainScreen = () => {
     const roomCode = "abc124";
@@ -24,6 +24,7 @@ const MainScreen = () => {
     const [pickingTeamId, setPickingTeamId] = useState();
     const [teams, setTeams] = useState([]);
     const [mons, setMons] = useState([]);
+    const [selectedPokemon, setSelectedPokemon] = useState("");
 
     useEffect(() => {
         socket.connect();
@@ -41,6 +42,15 @@ const MainScreen = () => {
         };
     }, []);
 
+    const confirmPokemon = () => {
+        setSelectedPokemon("CONFIRMED");
+    };
+
+    const cancelPokemon = () => {
+        setSelectedPokemon("");
+    };
+    
+
     return <div className="mainScreenContainer">
         <div className="leftContainer">
             <div>
@@ -51,7 +61,8 @@ const MainScreen = () => {
             </div>
             <Title />
             <SearchBar />
-            <PokemonList mons={mons} />
+            <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}/>
+            <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon}/>
         </div>
         <div>
             <TeamList teams={teams} pickingTeamId={pickingTeamId} />

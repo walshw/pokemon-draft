@@ -2,16 +2,20 @@ import SlCard from '@shoelace-style/shoelace/dist/react/card';
 
 import "./pokemonList.css"
 
-const renderMons = (mons) => {
-  return mons.map((mon, idx) =>
-    <tr key={idx}>
-      <td>{mon.name}</td>
-      <td>{mon.type}</td>
-      <td>{mon.name}</td>
-    </tr>);
-}
-
 const PokemonList = (props) => {
+  const renderMons = () => {
+    return props.mons.map((mon, idx) =>
+      <tr
+        key={idx}
+        onClick={() => props.setSelectedPokemon(mon.name)} 
+        className={mon.name === props.selectedMon ? "selectedMon" : ""}
+        >
+        <td>{mon.name}</td>
+        <td>{mon.type}</td>
+        <td>{mon.cost}</td>
+      </tr>);
+  }
+
   return <SlCard>
     <table className="poketable">
       <thead>
