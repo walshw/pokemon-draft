@@ -24,7 +24,8 @@ const MainScreen = () => {
     const [pickingTeamId, setPickingTeamId] = useState();
     const [teams, setTeams] = useState([]);
     const [mons, setMons] = useState([]);
-    const [selectedPokemon, setSelectedPokemon] = useState("");
+    const [selectedPokemon, setSelectedPokemon] = useState(null);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         socket.connect();
@@ -43,11 +44,18 @@ const MainScreen = () => {
     }, []);
 
     const confirmPokemon = () => {
-        setSelectedPokemon("CONFIRMED");
+        socket.emitWithAck("pick", selectedPokemon.id).then((resp) => {
+            if (!resp) {
+                alert("An error has occured with your poke-confirmation");
+                return;
+            }
+
+            // On success, next player turn
+        });
     };
 
     const cancelPokemon = () => {
-        setSelectedPokemon("");
+        setSelectedPokemon(null);
     };
     
 
@@ -55,6 +63,7 @@ const MainScreen = () => {
         <div className="leftContainer">
             <div>
                 <SlBadge variant={isConnect ? "success" : "neutral"}>Status</SlBadge>
+                <SlBadge variant="primary">{pickingTeamId}</SlBadge>
                 <SlButton onClick={() => {socket.emit("startGame")}}>Start</SlButton>
                 <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
                 <SlButton onClick={() => socket.emit("pick", 43)}>Pick</SlButton>

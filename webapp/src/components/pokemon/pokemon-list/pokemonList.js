@@ -7,7 +7,7 @@ const PokemonList = (props) => {
     return props.mons.map((mon, idx) =>
       <tr
         key={idx}
-        onClick={() => props.setSelectedPokemon(mon.name)} 
+        onClick={() => props.setSelectedPokemon(mon)} 
         className={mon.name === props.selectedMon ? "selectedMon" : ""}
         >
         <td>{mon.name}</td>

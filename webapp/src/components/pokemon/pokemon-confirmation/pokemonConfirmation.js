@@ -4,8 +4,8 @@ import './pokemonConfirmation.css';
 
 const PokemonConfirmation = (props) => {
     return <SlCard>
-        {props.selectedMon === "" ? "Please select a 🐒" : <>
-            <div>Lock in {props.selectedMon} </div>
+        {!props || props.selectedMon === null || props.selectedMon.name === "" ? "Please select a 🐒" : <>
+            <div>Lock in {props.selectedMon.name} </div>
             <SlButton onClick={props.cancelPokemon}>Cancel</SlButton>
             <SlButton onClick={props.confirmPokemon}>Confirm</SlButton>
         </>}
