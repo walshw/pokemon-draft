@@ -12,13 +12,18 @@ import "./teamList.css";
 // ];
 
 const TeamList = (props) => {
+    const isThisBitchReal = (userId, teamId) => {
+        console.log(userId, teamId);
+        return userId === teamId;
+    }
+
     const renderTeamCards = (teams) => {
         teams.sort((team, prev) => team.pickOrder - prev.pickOrder);
 
         return <div className="teamsContainer">
             {teams.map(team => {
                 return <div key={team.id}>
-                    <TeamCard team={team} isPicking={team.id === props.pickingTeamId} />
+                    <TeamCard team={team} isCurrentUser={isThisBitchReal(props.userId,team.id)} isPicking={team.id === props.pickingTeamId} />
                 </div>
             })}
         </div>;

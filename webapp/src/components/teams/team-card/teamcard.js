@@ -7,9 +7,10 @@ import SlAvatar from '@shoelace-style/shoelace/dist/react/avatar';
 import "./teamCard.css";
 
 const TeamCard = (props) => {
-    const { team } = props;
+    const { team, isCurrentUser } = props;
     const teamMax = 13;
     const pointMax = 110;
+    const userClass = isCurrentUser === true ? " userTeam" : "";
 
     const renderPokemonSlots = () => {
         const diff = teamMax - team.mons.length;
@@ -21,7 +22,7 @@ const TeamCard = (props) => {
 
     return <>
         <SlCard>
-            <div className="teamContainer">
+            <div className={"teamContainer" + userClass}>
                 <div className="playerInfo">
                     <SlAvatar image="https://i.redd.it/zu8rpygrxbf31.jpg"></SlAvatar>
                     <div>{team.name}</div>
