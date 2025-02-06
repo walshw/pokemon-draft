@@ -13,10 +13,11 @@ function App() {
   // TODO: We gotta rename these higher order components
   // * LoginScreen: I treat it as a login auth-wall (it totally COULD be )
   const [id, setUserId] = useState(null);
+  const [pfp, setUserPfp] = useState(null);
 
   return (
-    <LoginScreen setUserId={setUserId}>
-      <MainScreen userId={id} setUserId={setUserId}/>
+    <LoginScreen setUserId={setUserId} setUserPfp={setUserPfp} pfp={pfp}>
+      <MainScreen userId={id} setUserId={setUserId} pfp={pfp}/>
     </LoginScreen>
   );
 }

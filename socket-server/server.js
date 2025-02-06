@@ -17,11 +17,11 @@ const io = new Server({
 
 // Teams that CANNOT pick will be have their compelete key set to true during pick rotation
 let teamsDefault = [
-    { id: 0, name: "William", pickOrder: 1, points: 999, complete: false, mons: [] },
-    { id: 1, name: "Billy", pickOrder: 3, points: 0, complete: false, mons: [] },
-    { id: 2, name: "Guillermo", pickOrder: 2, points: 0, complete: false, mons: [] },
-    { id: 3, name: "Wilhelm", pickOrder: 4, points: 99, complete: false, mons: [] },
-    { id: 4, name: "Guglielmo", pickOrder: 6, points: 0, complete: false, mons: [] },
+    { id: 0, name: "William", pickOrder: 1, complete: false, mons: [] },
+    { id: 1, name: "Billy", pickOrder: 3, complete: false, mons: [] },
+    { id: 2, name: "Guillermo", pickOrder: 2, complete: false, mons: [] },
+    { id: 3, name: "Wilhelm", pickOrder: 4, complete: false, mons: [] },
+    { id: 4, name: "Guglielmo", pickOrder: 6, complete: false, mons: [] },
 ];
 teamsDefault = [];
 
@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
     socket.join(roomName);
     console.log(`User: ${socket.handshake.auth.userId} | CONNECTED | IP: ${socket.handshake.address}`);
 
-    connections.push({ address: socket.handshake.address, id: socket.handshake.auth.userId });
+    connections.push({ address: socket.handshake.address, id: socket.handshake.auth.userId, pfp: socket.handshake.auth.pfp });
     io.to(roomName).emit("connections", connections);
 
     let draftComplete = false;
@@ -67,8 +67,8 @@ io.on("connection", (socket) => {
                 {
                     id: connection.id,
                     name: connection.id,
+                    pfp: connection.pfp,
                     pickOrder: 1,
-                    points: 999,
                     complete: false,
                     mons: []
                 },
@@ -164,10 +164,6 @@ const updateCompletedTeams = () => {
 const canTeamStillPick = (team) => {
     // BROKE OUT THIS BOOLEAN LOGIC FOR SANITY 🤡
     if (team.mons.length >= 13) {
-        return false;
-    }
-
-    if (team.points <= 0) {
         return false;
     }
 

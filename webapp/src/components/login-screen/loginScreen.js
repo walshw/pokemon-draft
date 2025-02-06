@@ -8,7 +8,6 @@ import "./loginScreen.css";
 
 function LoginScreen(props) {
     const [isLoggedIn, setIsloggedIn] = useState(false);
-    const [chosenPfp, setChosenPfp] = useState(null);
     const [pfpFilter, setPfpFilter] = useState("");
     const [pfpState, setPfpState] = useState(pfps);
 
@@ -23,16 +22,15 @@ function LoginScreen(props) {
     }, [pfpFilter]);
 
     const handleClick = (img) => {
-        if (chosenPfp && img.fileName === chosenPfp.fileName) {
-            setChosenPfp(null);
+        if (props.pfp && img.fileName === props.pfp.fileName) {
+            props.setUserPfp(null);
             return;
         }
-
-        setChosenPfp(img);
+        props.setUserPfp(img);
     }
 
     const getClassName = (img) => {
-        if (chosenPfp && img.fileName === chosenPfp.fileName) {
+        if (props.pfp && img.fileName === props.pfp.fileName) {
             return "pfp selectedPfp";
         }
 
@@ -49,14 +47,14 @@ function LoginScreen(props) {
     }
 
     const renderSelectedPfp = () => {
-        if (!chosenPfp) {
+        if (!props.pfp) {
             return;
         }
 
         return <SlCard>
-            <img src={chosenPfp.fileName} alt={chosenPfp.fileName} />
-            <div>Name: {chosenPfp.imageName}</div>
-            <div>Artist: {chosenPfp.artistName}</div>
+            <img src={props.pfp.fileName} alt={props.pfp.fileName} />
+            <div>Name: {props.pfp.imageName}</div>
+            <div>Artist: {props.pfp.artistName}</div>
         </SlCard>
     }
 
@@ -66,7 +64,7 @@ function LoginScreen(props) {
             <SlInput label="Search pfps" onSlInput={(e) => setPfpFilter(e.target.value)}></SlInput>
             {renderImages()}
             {renderSelectedPfp()}
-            <SlButton onClick={() => setIsloggedIn(true)} disabled={!chosenPfp}>PLAY</SlButton>
+            <SlButton onClick={() => setIsloggedIn(true)} disabled={!props.pfp}>PLAY</SlButton>
         </div>
     }
 

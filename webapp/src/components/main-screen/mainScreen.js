@@ -21,6 +21,7 @@ const MainScreen = (props) => {
     
     const myId = props.userId;
     const isAdmin = props.userId === "wgb";
+    const myPfp = props.pfp;
 
     // https://socket.io/how-to/use-with-react
     const [isConnect, setIsConnected] = useState(socket.connected);
@@ -33,7 +34,7 @@ const MainScreen = (props) => {
     const [connections, setConnections] = useState([]);
 
     useEffect(() => {
-        socket.auth = { userId: props.userId }
+        socket.auth = { userId: props.userId, pfp: myPfp }
         socket.connect();
         socket.on("connect", () => setIsConnected(true));
         socket.on("disconnect", () => setIsConnected(false));
@@ -64,6 +65,7 @@ const MainScreen = (props) => {
                 alert("An error has occured with your poke-confirmation");
                 return;
             }
+            setSelectedPokemon(null);
 
             // On success, next player turn
         });

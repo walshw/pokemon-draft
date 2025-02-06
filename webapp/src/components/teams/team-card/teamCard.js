@@ -24,7 +24,7 @@ const TeamCard = (props) => {
         <SlCard>
             <div className={"teamContainer" + userClass}>
                 <div className="playerInfo">
-                    <SlAvatar image="https://i.redd.it/zu8rpygrxbf31.jpg"></SlAvatar>
+                    <SlAvatar image={team.pfp.fileName ?? "https://i.redd.it/zu8rpygrxbf31.jpg"}></SlAvatar>
                     <div>{team.name}</div>
                     <SlBadge variant={props.isPicking ? "success" : "neutral"}>{team.pickOrder}</SlBadge>
                 </div>
@@ -33,7 +33,7 @@ const TeamCard = (props) => {
 
                 <div className="pointContainer">
                     <SlProgressBar value={45} />
-                    {team.points} of {pointMax}
+                    {team.mons.length} of {teamMax}
                 </div>
             </div>
         </SlCard>
