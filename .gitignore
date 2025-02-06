@@ -1,3 +1,5 @@
 .vscode/settings.json
 /scraping/images/
 /scraping/node_modules/
+/scraping/smogon-data/images
+/scraping/smogon-data/output/*
