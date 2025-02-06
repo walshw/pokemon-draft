@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import { configDotenv } from "dotenv";
+import monsDefault from './data/draftListLoader.js';
 
 configDotenv();
 
@@ -23,17 +24,6 @@ let teamsDefault = [
     { id: 4, name: "Guglielmo", pickOrder: 6, points: 0, complete: false, mons: [] },
 ];
 teamsDefault = [];
-
-// TODO: Grab the list of pokemon and import it properly AT SOME POINT NOT RIGHT NOW DONT GET DISTRACT FROM THE CORE LOOP! --WWALSH
-const monsDefault = [
-    { id: 0, name: "Goku", type: "Saiyan", picked: false, cost: 99 },
-    { id: 1, name: "Pikachu", type: "Electric", picked: false, cost: 5 },
-    { id: 2, name: "Charmander", type: "Fire", picked: false, cost: 3 },
-    { id: 3, name: "Aipom", type: "Monkey", picked: false, cost: 12 },
-    { id: 4, name: "Minun", type: "Electric", picked: false, cost: 6 },
-    { id: 5, name: "Plusle", type: "Electric", picked: false, cost: 6 },
-    { id: 6, name: "Mewtwo", type: "Psychic", picked: false, cost: 98 },
-];
 
 let mons = structuredClone(monsDefault);
 let teams = structuredClone(teamsDefault);
@@ -129,17 +119,11 @@ io.on("connection", (socket) => {
             return false;
         }
 
-        if (playerTeam.points < selectedMon.cost) {
-            callback(false);
-            return false;
-        }
-
-        playerTeam.points = playerTeam.points - selectedMon.cost;
         selectedMon.picked = true;
         playerTeam.mons.push(selectedMon);
 
         // If the team is full OR can no longer pick any more mons, move them to the complete teams
-        if (!(playerTeam.mons.length < 13 || (playerTeam.points > 0 && mons.some(mon => mon.cost >= playerTeam.points)))) {
+        if (!(playerTeam.mons.length < 13)) {
             playerTeam.complete = true;
         }
 
@@ -187,7 +171,7 @@ const canTeamStillPick = (team) => {
         return false;
     }
 
-    return mons.some(mon => mon.cost <= team.points);
+    return true;
 }
 
 const getNextTeamId = (currentTeamId) => {
