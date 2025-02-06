@@ -7,7 +7,7 @@ const PokemonList = (props) => {
       <tr
         key={idx}
         onClick={() => props.setSelectedPokemon(mon)}
-        className={mon.name === props.selectedMon.name ? "selectedMon" : ""}
+        className={props.selectedMon && mon.name === props.selectedMon.name ? "selectedMon" : ""}
       > 
         <td>{mon.name}</td>
         <td>{mon.hp}</td>
@@ -18,9 +18,9 @@ const PokemonList = (props) => {
         <td>{mon.spe}</td>
         <td>{mon.weight}</td>
         <td>{mon.height}</td>
-        <td>{mon.types.join(",")}</td>
-        <td>{mon.abilities.join(",")}</td>
-        <td>{mon.fileName}</td>
+        <td>{mon.types.join(", ")}</td>
+        <td>{mon.abilities.join(", ")}</td>
+        <td><img src={mon.fileName} alrt={mon.fileName}/></td>
         <td>{mon.picked}</td>
       </tr>);
   }
