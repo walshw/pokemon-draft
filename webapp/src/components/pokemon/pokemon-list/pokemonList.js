@@ -2,11 +2,17 @@ import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import "./pokemonList.css"
 
 const PokemonList = (props) => {
+  const handleClick = (mon) => {
+    if (props.isPlayerPicking) {
+      props.setSelectedPokemon(mon);
+    }
+  }
+
   const renderMons = () => {
     return props.mons.filter(mon => !mon.picked).map((mon, idx) =>
       <tr
         key={idx}
-        onClick={() => props.setSelectedPokemon(mon)}
+        onClick={() => handleClick(mon)}
         className={props.selectedMon && mon.name === props.selectedMon.name ? "selectedMon" : ""}
       > 
         <td>{mon.name}</td>
