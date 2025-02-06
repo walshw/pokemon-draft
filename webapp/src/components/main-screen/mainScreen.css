@@ -1,6 +1,7 @@
 .mainScreenContainer {
     display: flex;
     flex-direction: row;
+    padding: 70px;
 }
 
 .leftContainer {
