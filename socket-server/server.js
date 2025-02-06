@@ -11,7 +11,7 @@ const teamMonMax = 13;
 
 const io = new Server({
     cors: {
-        origin: [process.env.LOCAL_URL, process.env.REACT_URL]
+        origin: [process.env.LOCAL_URL, process.env.REACT_URL, process.env.LOCALHOST_URL]
     }
 });
 
