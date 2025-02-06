@@ -14,7 +14,7 @@ const PokemonList = (props) => {
         key={idx}
         onClick={() => handleClick(mon)}
         className={props.selectedMon && mon.name === props.selectedMon.name ? "selectedMon" : ""}
-      > 
+      >
         <td>{mon.name}</td>
         <td>{mon.hp}</td>
         <td>{mon.atk}</td>
@@ -26,8 +26,7 @@ const PokemonList = (props) => {
         <td>{mon.height}</td>
         <td>{mon.types.join(", ")}</td>
         <td>{mon.abilities.join(", ")}</td>
-        <td><img src={mon.fileName} alrt={mon.fileName}/></td>
-        <td>{mon.picked}</td>
+        <td><img src={mon.fileName} alrt={mon.fileName} /></td>
       </tr>);
   }
 
@@ -47,7 +46,6 @@ const PokemonList = (props) => {
           <td>Types</td>
           <td>Abilities</td>
           <td>FileName</td>
-          <td>Picked</td>
         </tr>
       </thead>
       <tbody>
