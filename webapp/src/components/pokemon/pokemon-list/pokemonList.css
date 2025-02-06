@@ -1,5 +1,10 @@
+.poketable {
+    overflow-y: scroll;
+    max-height: 500px;
+}
+
 table {
-    border-collapse: collapse;
+    border-collapse:collapse;
 }
 
 tr {

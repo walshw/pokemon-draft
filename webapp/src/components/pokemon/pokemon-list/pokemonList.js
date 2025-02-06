@@ -7,8 +7,8 @@ const PokemonList = (props) => {
       <tr
         key={idx}
         onClick={() => props.setSelectedPokemon(mon)}
-        className={mon.name === props.selectedMon ? "selectedMon" : ""}
-      >
+        className={mon.name === props.selectedMon.name ? "selectedMon" : ""}
+      > 
         <td>{mon.name}</td>
         <td>{mon.hp}</td>
         <td>{mon.atk}</td>
@@ -25,8 +25,8 @@ const PokemonList = (props) => {
       </tr>);
   }
 
-  return <SlCard>
-    <table className="poketable">
+  return <SlCard className="poketable">
+    <table>
       <thead>
         <tr>
           <td>Name</td>

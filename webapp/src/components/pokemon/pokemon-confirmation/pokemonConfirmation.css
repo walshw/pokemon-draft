@@ -1,11 +1,11 @@
 tbody > tr:hover {
-    background-color: yellow;
+    background-color: rgb(175, 225, 242);
 }
 
 .selectedMon {
-    background-color: lightblue;
+    background-color: rgb(35, 182, 231);
 }
 
 .selectedMon:hover {
-    background-color: lightblue;
+    background-color: rgb(35, 182, 231);
 }
