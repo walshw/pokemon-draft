@@ -6,12 +6,22 @@ const PokemonList = (props) => {
     return props.mons.filter(mon => !mon.picked).map((mon, idx) =>
       <tr
         key={idx}
-        onClick={() => props.setSelectedPokemon(mon)} 
+        onClick={() => props.setSelectedPokemon(mon)}
         className={mon.name === props.selectedMon ? "selectedMon" : ""}
-        >
+      >
         <td>{mon.name}</td>
-        <td>{mon.type}</td>
-        <td>{mon.cost}</td>
+        <td>{mon.hp}</td>
+        <td>{mon.atk}</td>
+        <td>{mon.def}</td>
+        <td>{mon.spa}</td>
+        <td>{mon.spd}</td>
+        <td>{mon.spe}</td>
+        <td>{mon.weight}</td>
+        <td>{mon.height}</td>
+        <td>{mon.types.join(",")}</td>
+        <td>{mon.abilities.join(",")}</td>
+        <td>{mon.fileName}</td>
+        <td>{mon.picked}</td>
       </tr>);
   }
 
@@ -19,9 +29,19 @@ const PokemonList = (props) => {
     <table className="poketable">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Cost</th>
+          <td>Name</td>
+          <td>Hp</td>
+          <td>Atk</td>
+          <td>Def</td>
+          <td>Spa</td>
+          <td>Spd</td>
+          <td>Spe</td>
+          <td>Weight</td>
+          <td>Height</td>
+          <td>Types</td>
+          <td>Abilities</td>
+          <td>FileName</td>
+          <td>Picked</td>
         </tr>
       </thead>
       <tbody>
