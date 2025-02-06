@@ -16,9 +16,6 @@ import PokemonConfirmation from "../pokemon/pokemon-confirmation/pokemonConfirma
 import Lobby from "../lobby/lobby";
 
 const MainScreen = (props) => {
-    // I think the ID should be stored in local storage with a random value
-    // The name they put in should just be a display name
-    
     const myId = props.userId;
     const isAdmin = props.userId === "wgb";
     const myPfp = props.pfp;
@@ -66,8 +63,6 @@ const MainScreen = (props) => {
                 return;
             }
             setSelectedPokemon(null);
-
-            // On success, next player turn
         });
     };
 
@@ -82,19 +77,20 @@ const MainScreen = (props) => {
 
         return <div className="mainScreenContainer">
             <div className="leftContainer">
-                <div>
-                    <SlBadge variant={isConnect ? "success" : "neutral"}>Status</SlBadge>
+                {isAdmin && <div>
+                    <SlBadge variant="danger">ADMIN VIEW</SlBadge>
+                    <SlBadge variant={isConnect ? "success" : "neutral"}>Picking team</SlBadge>
                     <SlBadge variant="primary">{pickingTeamId}</SlBadge>
                     <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
                     <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
-                </div>
+                </div>}
                 <Title />
                 <SearchBar />
-                <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId}/>
+                <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} />
                 <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId} />
             </div>
             <div>
-                <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId}/>
+                <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId} />
                 {isAdmin && <Lobby connections={connections} />}
             </div>
         </div>;
