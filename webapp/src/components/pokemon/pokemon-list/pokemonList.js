@@ -15,18 +15,16 @@ const PokemonList = (props) => {
         onClick={() => handleClick(mon)}
         className={props.selectedMon && mon.name === props.selectedMon.name ? "selectedMon" : ""}
       >
+        <td><img src={mon.fileName} alrt={mon.fileName} /></td>
         <td>{mon.name}</td>
+        <td>{mon.types.join(", ")}</td>
+        <td>{mon.abilities.join(", ")}</td>
         <td>{mon.hp}</td>
         <td>{mon.atk}</td>
         <td>{mon.def}</td>
         <td>{mon.spa}</td>
         <td>{mon.spd}</td>
         <td>{mon.spe}</td>
-        <td>{mon.weight}</td>
-        <td>{mon.height}</td>
-        <td>{mon.types.join(", ")}</td>
-        <td>{mon.abilities.join(", ")}</td>
-        <td><img src={mon.fileName} alrt={mon.fileName} /></td>
       </tr>);
   }
 
@@ -34,18 +32,16 @@ const PokemonList = (props) => {
     <table>
       <thead>
         <tr>
-          <td>Name</td>
+          <td>Pokemon</td>
+          <td></td>          
+          <td>Type</td>
+          <td>Abilities</td>
           <td>Hp</td>
           <td>Atk</td>
           <td>Def</td>
           <td>Spa</td>
           <td>Spd</td>
           <td>Spe</td>
-          <td>Weight</td>
-          <td>Height</td>
-          <td>Types</td>
-          <td>Abilities</td>
-          <td>FileName</td>
         </tr>
       </thead>
       <tbody>

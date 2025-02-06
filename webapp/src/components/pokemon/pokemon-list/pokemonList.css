@@ -1,15 +1,24 @@
 .poketable {
     overflow-y: scroll;
-    max-height: 500px;
 }
 
 table {
     border-collapse:collapse;
 }
 
+thead {
+    font-weight: bold;
+}
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: hsl(240, 5.9%, 11%); /* Match the header background */
+  }
+
 tr {
     border: solid;
-    border-width: 1px 0;
+    border-width: 0px 0;
 }
 
 td {

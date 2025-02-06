@@ -1,4 +1,4 @@
-import '@shoelace-style/shoelace/dist/themes/light.css';
+import '@shoelace-style/shoelace/dist/themes/dark.css';
 import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path';
 import MainScreen from './components/main-screen/mainScreen';
 import LoginScreen from './components/login-screen/loginScreen';
