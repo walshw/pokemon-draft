@@ -30,10 +30,14 @@ let teams = structuredClone(teamsDefault);
 
 let connections = [];
 let pickingTeamId = null;
+let draftComplete = false;
 
 io.on("connection", (socket) => {
     const userId = socket.handshake.auth.userId;
     const roomName = "demoRoom";
+    
+    // how to reconnect:
+    // pick same name
 
     if (userId === null) {
         return;
@@ -53,9 +57,15 @@ io.on("connection", (socket) => {
     connections.push({ address: socket.handshake.address, id: socket.handshake.auth.userId, pfp: socket.handshake.auth.pfp });
     io.to(roomName).emit("connections", connections);
 
-    let draftComplete = false;
+    if (teams.length > 0) {
+        console.log("emitted");
+        
+        emitGameState();
+    }
+
 
     socket.on("startGame", () => {
+        draftComplete = false;
         // ? pull the roomName from some payload in the socket ?
         console.log("starts");
         // Reset teams
@@ -68,6 +78,7 @@ io.on("connection", (socket) => {
                     id: connection.id,
                     name: connection.id,
                     pfp: connection.pfp,
+                    //TODO: Admin has to set pick order
                     pickOrder: index,
                     complete: false,
                     mons: []
@@ -189,6 +200,7 @@ const canTeamStillPick = (team) => {
     return true;
 }
 
+// TODO: Update this to follow snake order
 const getNextTeamId = (currentTeamId) => {
     let myTeams = teams.filter(team => !team.complete);
     myTeams.sort((a, b) => a.pickOrder - b.pickOrder);
