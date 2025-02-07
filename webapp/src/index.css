@@ -8,7 +8,7 @@ body {
 
 html {
   font-family: "Lookout";
-  font-size: 24px;
+  font-size: 32px;
   height: 100%;
   color: white;
 }
@@ -28,11 +28,13 @@ code {
 /* Types */
 .sl-badge::part(base) {
   display: flex;
-  width: 60px;
+  width: 72px;
   height: 24px;
   padding: 0px 8px 4px 8px;
-  color: --sl-color-neutral-50;
-  -webkit-text-stroke: 1px --sl-color-neutral-900;
+  color: white;
+  font-size: 24px;
+  text-shadow: 1px 1px 0px black;
+  /* -webkit-text-stroke: 1px --sl-color-neutral-900; */
   justify-content: center;
   align-items: center;
   border-radius: 8px;
