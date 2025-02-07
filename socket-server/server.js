@@ -6,8 +6,7 @@ configDotenv();
 
 const port = 10310;
 
-const teamMonMin = 10;
-const teamMonMax = 13;
+const teamMonMax = 12;
 
 const io = new Server({
     cors: {
@@ -62,13 +61,13 @@ io.on("connection", (socket) => {
         mons = structuredClone(monsDefault);
         teams = structuredClone(teamsDefault);
 
-        connections.forEach(connection => {
+        connections.forEach((connection, index) => {
             teams.push(
                 {
                     id: connection.id,
                     name: connection.id,
                     pfp: connection.pfp,
-                    pickOrder: 1,
+                    pickOrder: index,
                     complete: false,
                     mons: []
                 },
@@ -114,7 +113,7 @@ io.on("connection", (socket) => {
             return false;
         }
 
-        if (playerTeam.mons.length >= 13) {
+        if (playerTeam.mons.length >= teamMonMax) {
             callback(false);
             return false;
         }
@@ -123,7 +122,7 @@ io.on("connection", (socket) => {
         playerTeam.mons.push(selectedMon);
 
         // If the team is full OR can no longer pick any more mons, move them to the complete teams
-        if (!(playerTeam.mons.length < 13)) {
+        if (!(playerTeam.mons.length < teamMonMax)) {
             playerTeam.complete = true;
         }
 
@@ -131,13 +130,16 @@ io.on("connection", (socket) => {
         // code smell???
         updateCompletedTeams();
 
-        const nextTeamId = getNextTeamId(pickingTeamId);
-        pickingTeamId = nextTeamId;
 
         // is game done?
         if (!mons.some(mon => !mon.picked) || !teams.some(team => !team.complete)) {
             draftComplete = true;
             console.log("draft complete");
+            // TODO: Do something clientside to prevent clicking or see a "heres my team" page
+            // TODO: Save draft teams to json on draft complete
+        } else {
+            const nextTeamId = getNextTeamId(pickingTeamId);
+            pickingTeamId = nextTeamId;
         }
 
         emitGameState(roomName);
@@ -163,7 +165,7 @@ const updateCompletedTeams = () => {
 
 const canTeamStillPick = (team) => {
     // BROKE OUT THIS BOOLEAN LOGIC FOR SANITY 🤡
-    if (team.mons.length >= 13) {
+    if (team.mons.length >= teamMonMax) {
         return false;
     }
 
