@@ -32,6 +32,7 @@ let connections = [];
 let pickingTeamId = null;
 let draftComplete = false;
 
+// TODO: Handling ppl with the same name?
 io.on("connection", (socket) => {
     const userId = socket.handshake.auth.userId;
     const roomName = "demoRoom";
@@ -54,7 +55,7 @@ io.on("connection", (socket) => {
     socket.join(roomName);
     console.log(`User: ${socket.handshake.auth.userId} | CONNECTED | IP: ${socket.handshake.address}`);
 
-    connections.push({ address: socket.handshake.address, id: socket.handshake.auth.userId, pfp: socket.handshake.auth.pfp });
+    connections.push({ address: socket.handshake.address, id: socket.handshake.auth.userId, pfp: socket.handshake.auth.pfp, pickOrder:0 });
     io.to(roomName).emit("connections", connections);
 
     if (teams.length > 0) {
@@ -70,7 +71,7 @@ io.on("connection", (socket) => {
         console.log("starts");
         // Reset teams
         mons = structuredClone(monsDefault);
-        teams = structuredClone(teamsDefault);
+        teams = [];
 
         connections.forEach((connection, index) => {
             teams.push(
@@ -78,25 +79,23 @@ io.on("connection", (socket) => {
                     id: connection.id,
                     name: connection.id,
                     pfp: connection.pfp,
-                    //TODO: Admin has to set pick order
-                    pickOrder: index,
+                    pickOrder: connection.pickOrder,
                     complete: false,
                     mons: []
                 },
             )
         })
 
-        pickingTeamId = teams[0].id;
+        setNextTeamId();
         emitGameState(roomName);
     });
 
     socket.on("stopGame", () => {
         // Remove all game listeners
         // Cleanup etc.
-        mons = structuredClone(monsDefault);
-        teams = structuredClone(teamsDefault);
-
         pickingTeamId = null;
+        mons = [];
+        teams = [];
         emitGameState(roomName);
         socket.offAny();
     });
@@ -166,14 +165,17 @@ io.on("connection", (socket) => {
 
             // TODO: Do something clientside to prevent clicking or see a "heres my team" page
         } else {
-            const nextTeamId = getNextTeamId(pickingTeamId);
-            pickingTeamId = nextTeamId;
+            setNextTeamId(pickingTeamId);
         }
 
         emitGameState(roomName);
 
         return callback(true);
     });
+
+    socket.on("updatedPickOrder", (updatedConnections) => {
+        connections = updatedConnections;
+    })
 
     socket.on("disconnect", () => {
         connections = connections.filter(connection => connection.id !== socket.handshake.auth.userId);
@@ -201,10 +203,16 @@ const canTeamStillPick = (team) => {
 }
 
 // TODO: Update this to follow snake order
-const getNextTeamId = (currentTeamId) => {
+const setNextTeamId = () => {
     let myTeams = teams.filter(team => !team.complete);
     myTeams.sort((a, b) => a.pickOrder - b.pickOrder);
-    const teamIndex = myTeams.findIndex(team => team.id === currentTeamId);
+
+    if (!pickingTeamId) {
+        pickingTeamId = myTeams[0].id;
+        return;
+    }
+
+    const teamIndex = myTeams.findIndex(team => team.id === pickingTeamId);
     const indexForNextTeam = myTeams.length > 1 ? (teamIndex + 1) % myTeams.length : 0;
     const nextTeamId = myTeams[indexForNextTeam].id;
     console.log(nextTeamId);
@@ -214,7 +222,7 @@ const getNextTeamId = (currentTeamId) => {
 
     console.log(`Team: ${x.name} up next pick order: ${x.pickOrder}`);
 
-    return nextTeamId;
+    pickingTeamId = nextTeamId;
 }
 
 console.log("Listening on port: " + port);

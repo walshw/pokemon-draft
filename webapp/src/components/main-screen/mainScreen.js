@@ -25,7 +25,6 @@ const MainScreen = (props) => {
     const [teams, setTeams] = useState([]);
     const [mons, setMons] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
-    const [error, setError] = useState(false);
     const [draftComplete, setDraftComplete] = useState(false);
     const [connections, setConnections] = useState([]);
 
@@ -69,6 +68,12 @@ const MainScreen = (props) => {
         setSelectedPokemon(null);
     };
 
+    const setUserPickOrder= (id, pickOrder) =>{
+        const connectionIdx = connections.findIndex(connection => connection.id === id);
+        connections[connectionIdx].pickOrder = pickOrder;
+        socket.emit("updatedPickOrder", connections);
+    }
+
     const renderMainScreen = () => {
         if (!pickingTeamId && !isAdmin) {
             return <Lobby connections={connections}></Lobby>
@@ -93,7 +98,7 @@ const MainScreen = (props) => {
                         </div>
                         <div>
                             <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId} />
-                            {isAdmin && <Lobby connections={connections} />}
+                            {(isAdmin && !pickingTeamId) && <Lobby isAdmin={isAdmin} connections={connections} setUserPickOrder={setUserPickOrder}/>}
                         </div>
                     </div>
                 </div>;
