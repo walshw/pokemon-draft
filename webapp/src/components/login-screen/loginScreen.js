@@ -12,6 +12,16 @@ function LoginScreen(props) {
     const [pfpFilter, setPfpFilter] = useState("");
     const [pfpState, setPfpState] = useState(pfps);
 
+    const [holderText, setHolderText] = useState("");
+
+    useEffect(() => {
+        const cachedName = localStorage.getItem("cachedName");
+
+        if (cachedName) {
+            setHolderText(cachedName);
+        }
+    }, []);
+
     useEffect(() => {
         if (pfpFilter.trim() === "") {
             setPfpState(pfps);
@@ -59,9 +69,19 @@ function LoginScreen(props) {
         </SlCard>
     }
 
+    const handlePlayClick = () => {
+        localStorage.setItem("cachedName", holderText);
+        setIsloggedIn(true);
+    }
+
+    const handleNameChange = (e) => {
+        props.setUserId(e.target.value);
+        setHolderText(e.target.value);
+    }
+
     const renderLoginForm = () => {
         return <div className="loginScreenContainer">
-            <SlInput className="customInput" label="What's your name?" onSlInput={(e) => props.setUserId(e.target.value)}>
+            <SlInput value={holderText} className="customInput" label="What's your name?" onSlInput={(e) => handleNameChange(e)}>
             
             </SlInput>
             <SlInput className="customInput" label="Search pfps" onSlInput={(e) => setPfpFilter(e.target.value)}>
@@ -69,7 +89,7 @@ function LoginScreen(props) {
             </SlInput>
             {renderImages()}
             {renderSelectedPfp()}
-            <SlButton onClick={() => setIsloggedIn(true)} disabled={!props.pfp}>PLAY</SlButton>
+            <SlButton onClick={() => handlePlayClick()} disabled={!props.pfp}>PLAY</SlButton>
         </div>
     }
 
