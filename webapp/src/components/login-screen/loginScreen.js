@@ -11,7 +11,6 @@ function LoginScreen(props) {
     const [isLoggedIn, setIsloggedIn] = useState(false);
     const [pfpFilter, setPfpFilter] = useState("");
     const [pfpState, setPfpState] = useState(pfps);
-
     const [holderText, setHolderText] = useState("");
 
     useEffect(() => {
@@ -71,11 +70,11 @@ function LoginScreen(props) {
 
     const handlePlayClick = () => {
         localStorage.setItem("cachedName", holderText);
+        props.setUserId(holderText);
         setIsloggedIn(true);
     }
 
     const handleNameChange = (e) => {
-        props.setUserId(e.target.value);
         setHolderText(e.target.value);
     }
 
