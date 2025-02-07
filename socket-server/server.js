@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import { configDotenv } from "dotenv";
 import monsDefault from './data/draftListLoader.js';
+import { writeFileSync } from "fs";
 
 configDotenv();
 
@@ -130,13 +131,29 @@ io.on("connection", (socket) => {
         // code smell???
         updateCompletedTeams();
 
-
         // is game done?
         if (!mons.some(mon => !mon.picked) || !teams.some(team => !team.complete)) {
             draftComplete = true;
             console.log("draft complete");
+
+            const outputJson = teams.map(team => {
+                return {
+                    name: team.name,
+                    mons: team.mons.map(mon => mon.name),
+                }
+            });
+
+            const now = new Date();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const filename = `${month}-${day}-${year}_${hours}-${minutes}_draft.json`;
+
+            writeFileSync("completedDrafts/" + filename, JSON.stringify(outputJson, null, "\t"));
+
             // TODO: Do something clientside to prevent clicking or see a "heres my team" page
-            // TODO: Save draft teams to json on draft complete
         } else {
             const nextTeamId = getNextTeamId(pickingTeamId);
             pickingTeamId = nextTeamId;
