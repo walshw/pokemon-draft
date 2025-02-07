@@ -74,24 +74,29 @@ const MainScreen = (props) => {
             return <Lobby connections={connections}></Lobby>
         }
 
-        return <div className="mainScreenContainer">
-                <div className="leftContainer">
-                    {isAdmin && <div>
-                        <SlBadge variant="danger">ADMIN VIEW</SlBadge>
-                        <SlBadge variant={isConnect ? "success" : "neutral"}>Picking team</SlBadge>
-                        <SlBadge variant="primary">{pickingTeamId}</SlBadge>
-                        <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
-                        <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
-                    </div>}
-                    <SearchBar />
-                    <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} />
-                    <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId} />
-                </div>
-                <div>
-                    <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId} />
-                    {isAdmin && <Lobby connections={connections} />}
-                </div>
-            </div>;
+        return <div className="main">
+                    <div className="title">
+                        <h1>GEN7 OU Draft</h1>
+                    </div>
+                    <div className="game">
+                        <div className="list">
+                            {isAdmin && <div>
+                                <SlBadge variant="danger">ADMIN VIEW</SlBadge>
+                                <SlBadge variant={isConnect ? "success" : "neutral"}>Picking team</SlBadge>
+                                <SlBadge variant="primary">{pickingTeamId}</SlBadge>
+                                <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
+                                <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
+                            </div>}
+                            <SearchBar />
+                            <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} />
+                            <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId} />
+                        </div>
+                        <div>
+                            <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId} />
+                            {isAdmin && <Lobby connections={connections} />}
+                        </div>
+                    </div>
+                </div>;
     }
 
     return renderMainScreen();

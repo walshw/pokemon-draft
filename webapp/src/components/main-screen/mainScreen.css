@@ -1,11 +1,26 @@
-.mainScreenContainer {
+.main {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* background-color: aqua; */
+}
+
+.title {
+    /* background-color: pink; */
+    margin-left: 16px;
+}
+
+.game {
     display: flex;
     flex-direction: row;
     padding-left: 70px;
+    /* background-color: red; */
 }
 
-.leftContainer {
+.list {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    /* background-color: green; */
+    height: 80vh;
+
 }
