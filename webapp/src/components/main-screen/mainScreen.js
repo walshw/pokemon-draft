@@ -17,7 +17,7 @@ import EndScreen from "../end-screen/endScreen";
 
 const MainScreen = (props) => {
     const myId = props.userId;
-    const isAdmin = props.userId === "wgb";
+    const isAdmin = ["wgb", "Berry", "Cat"].includes(props.userId);
     const myPfp = props.pfp;
 
     // Socket state variables
