@@ -17,7 +17,7 @@ function App() {
 
   return (
     <LoginScreen setUserId={setUserId} setUserPfp={setUserPfp} pfp={pfp}>
-      <MainScreen userId={id} setUserId={setUserId} pfp={pfp}/>
+      <MainScreen userId={id} setUserId={setUserId} pfp={pfp} />
     </LoginScreen>
   );
 }

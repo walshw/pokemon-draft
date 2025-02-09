@@ -112,3 +112,46 @@ code {
 .sl-badge.dark::part(base) {
   background-color: #6C4B3C;
 }
+
+sl-avatar::part(base) {
+  background-color: var(--sl-color-neutral-300);
+}
+
+.searchIcon {
+  font-size: 16px !important;
+  color: var(--sl-color-neutral-900);
+  padding: 8px;
+}
+
+/* Primary Button ---------------------------------------- */
+.sl-button.primary::part(base) {
+  --sl-input-height-medium: 54px;
+  background: var(--sl-color-primary-500 #6366f1);
+  border: solid 2px var(--sl-color-primary-500 #6366f1);
+  border-radius: 8px;
+  color: var(--sl-color-neutral-900);
+  text-shadow: 1px 1px 0px black;
+  font-size: 40px;
+  padding: 10px 16px 14px 16px;
+  align-items: center;
+  justify-content: center;
+  font-family: Lookout;
+  transition: var(--sl-transition-medium) transform ease, var(--sl-transition-medium) border ease;
+}
+
+.sl-button.primary::part(base):hover {
+  background: black;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.primaryButton::part(base):active {
+  background: var(--sl-color-primary-400 #818cf8);
+}
+
+.sl-button.primary::part(base):focus-visible {
+  box-shadow: 0 0 0 4px var(--sl-color-primary-300 #A5B4FC);
+}
+
+.sl-button.primary::part(label) {
+  color: var(--sl-color-neutral-50 #FAFAFA);
+}
