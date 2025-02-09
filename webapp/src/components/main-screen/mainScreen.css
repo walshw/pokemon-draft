@@ -29,6 +29,7 @@
     overflow-y: scroll;
     max-height: 100vh;
     width: 25%;
+    padding: 0px 8px;
 }
 
 .endgame {

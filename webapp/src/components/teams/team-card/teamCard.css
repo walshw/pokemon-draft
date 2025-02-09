@@ -44,7 +44,8 @@
 }
 
 .userTeam {
-    border: 2px solid green;
+    border: 2px solid var(--sl-color-neutral-300);
+    background-color: var(--sl-color-neutral-100);
 }
 
 .playerIconAndName {
@@ -62,5 +63,6 @@
 }
 
 .pickingTeam {
-    background-color: var(--sl-color-primary-200);
+    background-color: var(--sl-color-primary-100);
+    border: 2px solid var(--sl-color-primary-500);
 }
