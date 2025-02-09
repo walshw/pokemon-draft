@@ -55,8 +55,7 @@ const PokemonList = (props) => {
 
   const renderTypes = (types) => {
 
-
-    return <div>{types.map(stringToBadge)}</div>
+    return <div className="types">{types.map(stringToBadge)}</div>
   }
 
   const renderMons = () => {
@@ -66,7 +65,7 @@ const PokemonList = (props) => {
         onClick={() => handleClick(mon)}
         className={props.selectedMon && mon.name === props.selectedMon.name ? "selectedMon" : ""}
       >
-        <td><img src={mon.fileName} alrt={mon.fileName} /></td>
+        <td className='sprite'><img src={mon.fileName} alt={mon.fileName} /></td>
         <td>{mon.name}</td>
         <td>{renderTypes(mon.types)}</td>
         <td>{mon.abilities.join(", ")}</td>
@@ -83,8 +82,7 @@ const PokemonList = (props) => {
     <table>
       <thead>
         <tr>
-          <td>Pokemon</td>
-          <td></td>
+          <td colSpan="2">Pokemon</td>
           <td>Type</td>
           <td>Abilities</td>
           <td>Hp</td>

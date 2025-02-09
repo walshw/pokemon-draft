@@ -1,8 +1,8 @@
 body {
   height: 100%;
-  margin:0px;
+  margin: 0px;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; 
+  -moz-osx-font-smoothing: grayscale;
   background-color: hsl(240, 5.9%, 11%);
 }
 
@@ -16,6 +16,14 @@ html {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.heading {
+  font-family: Lookout, "Times", "Times New Roman";
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 38.4px;
+  letter-spacing: 0%;
 }
 
 @font-face {
@@ -57,7 +65,7 @@ code {
   background-color: #B3A05B;
 }
 
-.sl-badge.electric::part(base){
+.sl-badge.electric::part(base) {
   background-color: #FFC52C;
 }
 
@@ -123,8 +131,23 @@ sl-avatar::part(base) {
   padding: 8px;
 }
 
+sl-button::part(base) {
+  --sl-input-height-medium: 48px;
+  font-family: Lookout;
+  font-size: 40px;
+  padding: 10px 8px 14px 8px;
+  border-radius: 0px;
+}
+
+/* sl-button::part(base) {
+  --sl-input-height-medium: 54px;
+  font-family: Lookout;
+  font-size: 40px;
+  padding: 10px 16px 14px 16px;
+}
+
 /* Primary Button ---------------------------------------- */
-.sl-button.primary::part(base) {
+/* sl-button[variant="primary"]::part(base) {
   --sl-input-height-medium: 54px;
   background: var(--sl-color-primary-500 #6366f1);
   border: solid 2px var(--sl-color-primary-500 #6366f1);
@@ -139,28 +162,30 @@ sl-avatar::part(base) {
   transition: var(--sl-transition-medium) transform ease, var(--sl-transition-medium) border ease;
 }
 
-.sl-button.primary::part(base):hover {
+sl-button[variant="primary"]::part(base):hover {
   background: black;
   transform: scale(1.05) rotate(-1deg);
 }
 
-.primaryButton::part(base):active {
+sl-button[variant="primary"]::part(base):active {
   background: var(--sl-color-primary-400 #818cf8);
 }
 
-.sl-button.primary::part(base):focus-visible {
+sl-button[variant="primary"]::part(base):focus-visible {
   box-shadow: 0 0 0 4px var(--sl-color-primary-300 #A5B4FC);
 }
 
-.sl-button.primary::part(label) {
+sl-button[variant="primary"]::part(label) {
   color: var(--sl-color-neutral-50 #FAFAFA);
-}
+} */
+
+
 
 /* https://shoelace.style/getting-started/customizing/#css-parts */
 sl-input::part(base) {
   font-family: "Lookout";
-  border-radius: 8px;
+  border-radius: 0px;
   border-width: 2px;
-  padding: 8px;
+  padding: 8px 16px;
   font-size: 32px;
 }

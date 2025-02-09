@@ -1,11 +1,32 @@
 tbody > tr:hover {
-    background-color: rgb(175, 225, 242);
+    background-color: var(--sl-color-primary-100);
 }
 
 .selectedMon {
-    background-color: rgb(35, 182, 231);
+    background-color: var(--sl-color-primary-200);    
 }
 
 .selectedMon:hover {
-    background-color: rgb(35, 182, 231);
+    background-color: var(--sl-color-primary-200);
+}
+
+.confirmFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    min-height: 80px;
+    border-top: 2px solid var(--sl-color-neutral-300);
+    font-size: 40px;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 16px;
+}
+
+.confirmPokemon {
+    display: flex;
+    align-items: flex-end;
 }
