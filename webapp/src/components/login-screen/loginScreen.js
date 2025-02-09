@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SlAvatar from '@shoelace-style/shoelace/dist/react/avatar';
 import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlInput from '@shoelace-style/shoelace/dist/react/input';
 import SlButton from '@shoelace-style/shoelace/dist/react/button';
@@ -14,7 +15,7 @@ function LoginScreen(props) {
     const [holderText, setHolderText] = useState("");
     const [jokePlaceholder, setJokePlaceholder] = useState("");
 
-    const sillies = [":3", "Hatch Gedyum", "Wallbreaks were a mistake", "Ctrl + R", "Baby Nyx", "Sugma", "Oopi Goopi", "Klumbus", "The Mighty Squnch", "56.201.98.16", "I'm right behind you", "Uutch", "Jet Jaguar", "Squeedle", "It's like minecraft", "Zamboney", "Hoofus Goofus", "Mmm paint chip :)", "Boiled Peanut", "Meatball Hero", "Extra Parmesan", "Ohh I'll do Lemon Pepper, please", "Calabrese Nablidon", "Personally, I prefer Digimon", "Draft on, Bestie", "The Lions Win Easily"];
+    const sillies = [":3", "Hatch Gedjum", "Wallbreaks were a mistake", "Ctrl + R", "Baby Nyx", "Sugma", "Oopi Goopi", "Klumbus", "The Mighty Squnch", "56.201.98.16", "I'm right behind you", "Uutch", "Jet Jaguar", "Squeedle", "It's like minecraft", "Zamboney", "Hoofus Goofus", "Mmm paint chip :)", "Boiled Peanut", "Meatball Hero", "Extra Parmesan", "Ohh I'll do Lemon Pepper, please", "Calabrese Nablidon", "Personally, I prefer Digimon", "Draft on, Bestie", "1 Billion Lions every time", "Ursaluna Jumpscare", "You can always be kinder"];
 
     useEffect(() => {
         setJokePlaceholder(sillies[Math.floor(Math.random() * sillies.length)] + "...");
@@ -60,14 +61,6 @@ function LoginScreen(props) {
         </div>;
     }
 
-    const renderSelectedPfp = () => {
-        if (!props.pfp) {
-            return;
-        }
-
-        return;
-    }
-
     const handlePlayClick = () => {
         localStorage.setItem("cachedName", holderText);
         props.setUserId(holderText);
@@ -75,14 +68,49 @@ function LoginScreen(props) {
     }
 
     const handleNameChange = (e) => {
-        setHolderText(e.target.value);
+        setHolderText(e.target.value.trim());
 
         if (e.target.value === "") {
             localStorage.setItem("cachedName", "");
         }
     }
 
+    const renderPfpDisplay = () => {
+        let imageName = "";
+        let artistName = "";
+        const directions = [];
+
+        if (props.pfp) {
+            imageName = props.pfp.imageName
+            artistName = props.pfp.artistName
+        } else {
+            directions.push("Please pick a lil buddy :3");
+        }
+
+        if (holderText.trim() === "") {
+            directions.push("Please enter a name :|");
+        }
+
+        const avatar = props.pfp ?
+            <SlAvatar className="myAvatar" image={props.pfp.fileName}></SlAvatar>
+            :
+            <SlAvatar className="myAvatar" label="Circle avatar"></SlAvatar>;
+
+        return <div className="pfpDisplay">
+            {avatar}
+            {props.pfp && holderText.trim() !== ""
+                ?
+                <div>
+                    <div>Name: {imageName}</div>
+                    <div>Artist: {artistName}</div>
+                </div>
+                :
+                <div className="directionContainer">{directions.map((directionText, idx) => <div>{idx+ 1 + ") "}{directionText}</div>)}</div>}
+        </div>
+    }
+
     const renderLoginForm = () => {
+
         return <div className="loginScreenContainer ">
             <SlInput
                 size="Medium"
@@ -102,19 +130,12 @@ function LoginScreen(props) {
             </SlInput>
             {renderImages()}
             <div className="loginFooter">
-                {props.pfp && <div className="pfpDisplay">
-                    {/* //TODO: this needs to be a badge */}
-                    <img src={props.pfp.fileName} alt={props.pfp.fileName} />
-                    <div>
-                        <div>Name: {props.pfp.imageName}</div>
-                        <div>Artist: {props.pfp.artistName}</div>
-                    </div>
-                </div>}
+                {renderPfpDisplay()}
                 <SlButton
                     className="sl-button primary"
                     variant="primary"
                     onClick={() => handlePlayClick()}
-                    disabled={!props.pfp || !holderText}>
+                    disabled={!props.pfp || !holderText || holderText.trim() === ""}>
                     Play
                 </SlButton>
             </div>

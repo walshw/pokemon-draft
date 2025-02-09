@@ -13,6 +13,8 @@
 .pfpDisplay {
     display: flex;
     flex-direction: row;
+    gap: 0px 16px;
+    align-items: center;
 }
 
 .pfpContainer {
@@ -47,6 +49,10 @@
     border-width: 2px;
     padding: 8px;
     font-size: 32px;
+}
+
+sl-avatar::part(base) {
+    background-color: var(--sl-color-neutral-300);
 }
 
 .loginFooter {
