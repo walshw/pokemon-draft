@@ -3,18 +3,21 @@
 }
 
 table {
-    border-collapse:collapse;
+    border-collapse: collapse;
+    /* border-spacing: 8px; */
 }
 
 thead {
     font-weight: bold;
 }
+
 thead {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: hsl(240, 5.9%, 11%); /* Match the header background */
-  }
+    background-color: var(--sl-color-neutral-100);
+    /* Match the header background */
+}
 
 tr {
     border: solid;
@@ -22,7 +25,20 @@ tr {
 }
 
 td {
-    padding: 16px;
+    padding: 8px 16px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.sprite {
+    padding: 0px 0px 4px 0px;
+}
+
+.types {
+    display: flex;
+    gap: 8px;
 }
 
 tr:first-child {

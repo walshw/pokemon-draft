@@ -1,22 +1,23 @@
 .main {
     display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    height: 100vh;
-}
-
-.title {
-    margin-left: 16px;
+    flex-direction: row;
 }
 
 .game {
     display: flex;
-    flex-direction: row;
-    padding-left: 70px;
-    overflow-y: hidden;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--sl-color-neutral-100);
 }
 
-.list {
-    display: flex;
-    flex-direction: column;
+.game > * {
+    margin-left: 70px;
+}
+
+.game > :last-child {
+    margin-left: 0px;
+}
+
+.game > sl-input {
+    margin-bottom: 16px;
 }

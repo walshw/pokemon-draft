@@ -68,7 +68,7 @@ const MainScreen = (props) => {
         setSelectedPokemon(null);
     };
 
-    const setUserPickOrder= (id, pickOrder) =>{
+    const setUserPickOrder = (id, pickOrder) => {
         const connectionIdx = connections.findIndex(connection => connection.id === id);
         connections[connectionIdx].pickOrder = pickOrder;
         socket.emit("updatedPickOrder", connections);
@@ -80,28 +80,26 @@ const MainScreen = (props) => {
         }
 
         return <div className="main">
-                    <div className="title">
-                        <h1>GEN7 OU Draft</h1>
-                    </div>
-                    <div className="game">
-                        <div className="list">
-                            {isAdmin && <div>
-                                <SlBadge variant="danger">ADMIN CONTROLS</SlBadge>
-                                <SlBadge variant={isConnect ? "success" : "neutral"}>Picking team</SlBadge>
-                                <SlBadge variant="primary">{pickingTeamId}</SlBadge>
-                                <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
-                                <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
-                            </div>}
-                            <SearchBar />
-                            <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} />
-                            <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId} />
-                        </div>
-                        <div>
-                            <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId} />
-                            {(isAdmin && !pickingTeamId) && <Lobby isAdmin={isAdmin} connections={connections} setUserPickOrder={setUserPickOrder}/>}
-                        </div>
-                    </div>
-                </div>;
+            <div className="game">
+                <div className="heading">
+                    <h1>GEN7 OU Draft</h1>
+                </div>
+                {isAdmin && <div>
+                    <SlBadge variant="danger">ADMIN CONTROLS</SlBadge>
+                    <SlBadge variant={isConnect ? "success" : "neutral"}>Picking team</SlBadge>
+                    <SlBadge variant="primary">{pickingTeamId}</SlBadge>
+                    <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
+                    <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
+                </div>}
+                <SearchBar />
+                <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} />
+                <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId} />
+            </div>
+            <div className="teams">
+                <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId} />
+                {(isAdmin && !pickingTeamId) && <Lobby isAdmin={isAdmin} connections={connections} setUserPickOrder={setUserPickOrder} />}
+            </div>
+        </div>;
     }
 
     return renderMainScreen();

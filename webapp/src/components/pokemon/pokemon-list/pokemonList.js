@@ -1,4 +1,3 @@
-import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlBadge from '@shoelace-style/shoelace/dist/react/badge';
 import "./pokemonList.css"
 
@@ -56,8 +55,7 @@ const PokemonList = (props) => {
 
   const renderTypes = (types) => {
 
-
-    return <div>{types.map(stringToBadge)}</div>
+    return <div className="types">{types.map(stringToBadge)}</div>
   }
 
   const renderMons = () => {
@@ -67,25 +65,24 @@ const PokemonList = (props) => {
         onClick={() => handleClick(mon)}
         className={props.selectedMon && mon.name === props.selectedMon.name ? "selectedMon" : ""}
       >
-        <td><img src={mon.fileName} alrt={mon.fileName} /></td>
+        <td className='sprite'><img src={mon.fileName} alt={mon.fileName} /></td>
         <td>{mon.name}</td>
         <td>{renderTypes(mon.types)}</td>
         <td>{mon.abilities.join(", ")}</td>
-        <td>{mon.hp}</td>
-        <td>{mon.atk}</td>
-        <td>{mon.def}</td>
-        <td>{mon.spa}</td>
-        <td>{mon.spd}</td>
-        <td>{mon.spe}</td>
+        <td className="stat">{mon.hp}</td>
+        <td className="stat">{mon.atk}</td>
+        <td className="stat">{mon.def}</td>
+        <td className="stat">{mon.spa}</td>
+        <td className="stat">{mon.spd}</td>
+        <td className="stat">{mon.spe}</td>
       </tr>);
   }
 
-  return <SlCard className="poketable">
+  return <div className="poketable">
     <table>
       <thead>
         <tr>
-          <td>Pokemon</td>
-          <td></td>
+          <td colSpan="2">Pokemon</td>
           <td>Type</td>
           <td>Abilities</td>
           <td>Hp</td>
@@ -100,7 +97,7 @@ const PokemonList = (props) => {
         {renderMons(props.mons)}
       </tbody>
     </table>
-  </SlCard>;
+  </div>;
 }
 
 export default PokemonList;

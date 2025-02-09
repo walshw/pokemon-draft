@@ -1,22 +1,32 @@
-.teamContainer {
+.team {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     min-width: 200px;
-}
-
-.pointContainer {
-    display: flex;
-    flex-direction: column;
-    font-size: smaller;
+    justify-content: space-between;
+    padding: 16px;
 }
 
 .playerInfo {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
 }
 
 .userTeam {
-    background-color: lightblue;
+    background-color: var(--sl-color-primary-200);
+    border: 2px solid var(--sl-color-primary-500);
+}
+
+.playerIconAndName {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.teamMons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: end;
 }
