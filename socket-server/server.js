@@ -36,7 +36,7 @@ let draftComplete = false;
 io.on("connection", (socket) => {
     const userId = socket.handshake.auth.userId;
     const roomName = "demoRoom";
-    
+
     // how to reconnect:
     // pick same name
 
@@ -55,12 +55,12 @@ io.on("connection", (socket) => {
     socket.join(roomName);
     console.log(`User: ${socket.handshake.auth.userId} | CONNECTED | IP: ${socket.handshake.address}`);
 
-    connections.push({ address: socket.handshake.address, id: socket.handshake.auth.userId, pfp: socket.handshake.auth.pfp, pickOrder:0 });
+    connections.push({ address: socket.handshake.address, id: socket.handshake.auth.userId, pfp: socket.handshake.auth.pfp, pickOrder: 0 });
     io.to(roomName).emit("connections", connections);
 
     if (teams.length > 0) {
         console.log("emitted");
-        
+
         emitGameState();
     }
 
@@ -175,6 +175,12 @@ io.on("connection", (socket) => {
 
     socket.on("updatedPickOrder", (updatedConnections) => {
         connections = updatedConnections;
+    });
+
+    socket.on("kick", (userId) => {
+        console.log("Kicking user: " + userId);
+        connections = connections.filter(connection => connection.id !== userId);
+        io.to(roomName).emit("connections", connections);
     })
 
     socket.on("disconnect", () => {

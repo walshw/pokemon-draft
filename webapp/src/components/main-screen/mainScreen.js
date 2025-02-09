@@ -77,6 +77,10 @@ const MainScreen = (props) => {
         socket.emit("updatedPickOrder", connections);
     }
 
+    const kickUser = (id) => {
+        socket.emit("kick", id);
+    }
+
     const renderMainScreen = () => {
         if (!pickingTeamId && !isAdmin) {
             return <Lobby connections={connections}></Lobby>
@@ -100,7 +104,7 @@ const MainScreen = (props) => {
             </div>
             <div className="teams">
                 <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId} />
-                {(isAdmin && !pickingTeamId) && <Lobby isAdmin={isAdmin} connections={connections} setUserPickOrder={setUserPickOrder} />}
+                {(isAdmin && !pickingTeamId) && <Lobby kick={kickUser} isAdmin={isAdmin} connections={connections} setUserPickOrder={setUserPickOrder} />}
             </div>
         </div>;
     }

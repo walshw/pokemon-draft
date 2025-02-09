@@ -1,3 +1,4 @@
+import SlButton from '@shoelace-style/shoelace/dist/react/button';
 import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlInput from '@shoelace-style/shoelace/dist/react/input';
 import './lobby.css';
@@ -16,6 +17,10 @@ const Lobby = (props) => {
         e.target.value = 0;
     }
 
+    const handleClick = (id) => {
+        props.kick(id);
+    }
+
     const renderRow = (address, id, pickOrder) => {
         if (isAdmin) {
             return <div>
@@ -26,6 +31,9 @@ const Lobby = (props) => {
                     onSlInput={(e) => handleType(id, e)}
                     required>
                 </SlInput>
+                <SlButton onClick={()=> handleClick(id)}>
+                    Kick
+                </SlButton>
             </div>;
         }
 
