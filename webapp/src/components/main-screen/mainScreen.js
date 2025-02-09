@@ -95,7 +95,7 @@ const MainScreen = (props) => {
                 <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} />
                 <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId} />
             </div>
-            <div>
+            <div className="teams">
                 <TeamList teams={teams} pickingTeamId={pickingTeamId} userId={props.userId} />
                 {(isAdmin && !pickingTeamId) && <Lobby isAdmin={isAdmin} connections={connections} setUserPickOrder={setUserPickOrder} />}
             </div>

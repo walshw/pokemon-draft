@@ -8,7 +8,7 @@ body {
 
 html {
   font-family: "Lookout";
-  font-size: 32px;
+  font-size: 24px;
   height: 100%;
   color: white;
 }
@@ -21,9 +21,7 @@ code {
 .heading {
   font-family: Lookout, "Times", "Times New Roman";
   font-weight: 400;
-  font-size: 48px;
-  line-height: 38.4px;
-  letter-spacing: 0%;
+  line-height: 40px;
 }
 
 @font-face {

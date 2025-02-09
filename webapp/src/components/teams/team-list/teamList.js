@@ -1,4 +1,3 @@
-import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import TeamCard from '../team-card/teamCard';
 
 import "./teamList.css";
@@ -7,18 +6,16 @@ const TeamList = (props) => {
     const renderTeamCards = (teams) => {
         teams.sort((team, prev) => team.pickOrder - prev.pickOrder);
 
+        const pickingTeamText = props.pickingTeamId && props.pickingTeamId === props.userId ? "You are " : props.pickingTeamId + " is ";
         return <div className="teamsContainer">
+            <div className="picking">{pickingTeamText + "picking..."}</div>
             {teams.map(team => {
-                return <div key={team.id}>
-                    <TeamCard team={team} isCurrentUser={props.userId === team.id} isPicking={team.id === props.pickingTeamId} />
-                </div>
+                return <TeamCard team={team} isCurrentUser={props.userId === team.id} isPicking={team.id === props.pickingTeamId} />
             })}
         </div>;
     }
 
-    return <SlCard>
-        {renderTeamCards(props.teams)}
-    </SlCard>;
+    return renderTeamCards(props.teams);
 }
 
 export default TeamList;

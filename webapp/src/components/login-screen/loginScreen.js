@@ -69,6 +69,7 @@ function LoginScreen(props) {
     const handleNameChange = (e) => {
         setHolderText(e.target.value.trim());
 
+        // TODO: When caching pfp choice, clear cache here too
         if (e.target.value === "") {
             localStorage.setItem("cachedName", "");
         }
