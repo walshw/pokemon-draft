@@ -54,12 +54,31 @@ const PokemonList = (props) => {
   }
 
   const renderTypes = (types) => {
-
     return <div className="types">{types.map(stringToBadge)}</div>
   }
 
+  const filterLogic = (mon) => {
+    if (mon.picked) {
+      return false;
+    }
+
+    const lowerQ = props.query.toLowerCase();
+    
+    if (mon.name.toLowerCase().includes(lowerQ)) {
+      return true;
+    }
+    
+    if (mon.types.some(type => type.toLowerCase().includes(lowerQ))) {
+      return true;
+    }
+
+    if (mon.abilities.some(ability => ability.toLowerCase().includes(lowerQ))) {
+      return true;
+    }
+  }
+
   const renderMons = () => {
-    return props.mons.filter(mon => !mon.picked).map((mon, idx) =>
+    return props.mons.filter(filterLogic).map((mon, idx) =>
       <tr
         key={idx}
         onClick={() => handleClick(mon)}

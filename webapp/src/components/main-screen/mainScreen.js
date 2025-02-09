@@ -19,7 +19,7 @@ const MainScreen = (props) => {
     const isAdmin = props.userId === "wgb";
     const myPfp = props.pfp;
 
-    // https://socket.io/how-to/use-with-react
+    // Socket state variables
     const [isConnect, setIsConnected] = useState(socket.connected);
     const [pickingTeamId, setPickingTeamId] = useState(null);
     const [teams, setTeams] = useState([]);
@@ -27,6 +27,9 @@ const MainScreen = (props) => {
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [draftComplete, setDraftComplete] = useState(false);
     const [connections, setConnections] = useState([]);
+    
+    // Local state
+    const [query, setQuery] = useState("");
 
     useEffect(() => {
         socket.auth = { userId: props.userId, pfp: myPfp }
@@ -53,7 +56,7 @@ const MainScreen = (props) => {
             alert("OHHH BABY");
         }
     }, [draftComplete]);
-
+    
     const confirmPokemon = () => {
         socket.emitWithAck("pick", selectedPokemon.id).then((resp) => {
             if (!resp) {
@@ -91,8 +94,8 @@ const MainScreen = (props) => {
                     <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
                     <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
                 </div>}
-                <SearchBar />
-                <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} />
+                <SearchBar query={query} setQuery={setQuery} />
+                <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} query={query}/>
                 <PokemonConfirmation selectedMon={selectedPokemon} confirmPokemon={confirmPokemon} cancelPokemon={cancelPokemon} isPlayerPicking={myId == pickingTeamId} />
             </div>
             <div className="teams">
