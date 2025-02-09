@@ -97,6 +97,7 @@ const MainScreen = (props) => {
                     <SlBadge variant="primary">{pickingTeamId}</SlBadge>
                     <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
                     <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
+                    <SlButton onClick={() => socket.emit("clearConnections")}>Kick all</SlButton>
                 </div>}
                 <SearchBar query={query} setQuery={setQuery} />
                 <PokemonList mons={mons} selectedMon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} isPlayerPicking={myId == pickingTeamId} query={query}/>

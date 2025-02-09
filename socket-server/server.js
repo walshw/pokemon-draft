@@ -7,7 +7,7 @@ configDotenv();
 
 const port = 10310;
 
-const teamMonMax = 12;
+const teamMonMax = 5;
 
 const io = new Server({
     cors: {
@@ -32,7 +32,10 @@ let connections = [];
 let pickingTeamId = null;
 let draftComplete = false;
 
-// TODO: Handling ppl with the same name?
+// TODO: These can be better engineered to use a turn count approach.
+let direction = 1;
+let firstPickDone = false;
+
 io.on("connection", (socket) => {
     const userId = socket.handshake.auth.userId;
     const roomName = "demoRoom";
@@ -64,8 +67,9 @@ io.on("connection", (socket) => {
         emitGameState();
     }
 
-
     socket.on("startGame", () => {
+        direction = 1;
+        firstPickDone = false;
         draftComplete = false;
         // ? pull the roomName from some payload in the socket ?
         console.log("starts");
@@ -73,17 +77,23 @@ io.on("connection", (socket) => {
         mons = structuredClone(monsDefault);
         teams = [];
 
+        const connectionIdSet = new Set();
+
         connections.forEach((connection, index) => {
-            teams.push(
-                {
-                    id: connection.id,
-                    name: connection.id,
-                    pfp: connection.pfp,
-                    pickOrder: connection.pickOrder,
-                    complete: false,
-                    mons: []
-                },
-            )
+            if (!connectionIdSet.has(connection.id)) {
+                teams.push(
+                    {
+                        id: connection.id,
+                        name: connection.id,
+                        pfp: connection.pfp,
+                        pickOrder: connection.pickOrder,
+                        complete: false,
+                        mons: []
+                    },
+                )
+
+                connectionIdSet.add(connection.id);
+            }
         })
 
         setNextTeamId();
@@ -113,8 +123,6 @@ io.on("connection", (socket) => {
         if (socket.handshake.auth.userId !== pickingTeamId + "") {
             return;
         }
-
-        console.log("?");
 
         const playerTeam = teams.find(team => team.id === pickingTeamId);
         const selectedMon = mons.find(mon => mon.id === monId);
@@ -181,7 +189,12 @@ io.on("connection", (socket) => {
         console.log("Kicking user: " + userId);
         connections = connections.filter(connection => connection.id !== userId);
         io.to(roomName).emit("connections", connections);
-    })
+    });
+
+    socket.on("clearConnections", () => {
+        connections = [];
+        io.to(roomName).emit("connections", connections);
+    });
 
     socket.on("disconnect", () => {
         connections = connections.filter(connection => connection.id !== socket.handshake.auth.userId);
@@ -208,9 +221,9 @@ const canTeamStillPick = (team) => {
     return true;
 }
 
-// TODO: Update this to follow snake order
+// 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1
 const setNextTeamId = () => {
-    let myTeams = teams.filter(team => !team.complete);
+    let myTeams = teams;
     myTeams.sort((a, b) => a.pickOrder - b.pickOrder);
 
     if (!pickingTeamId) {
@@ -219,16 +232,33 @@ const setNextTeamId = () => {
     }
 
     const teamIndex = myTeams.findIndex(team => team.id === pickingTeamId);
-    const indexForNextTeam = myTeams.length > 1 ? (teamIndex + 1) % myTeams.length : 0;
-    const nextTeamId = myTeams[indexForNextTeam].id;
-    console.log(nextTeamId);
-    console.log(myTeams);
+    let indexForNextTeam = (teamIndex + direction);
 
+    if (indexForNextTeam >= myTeams.length) {
+        indexForNextTeam = myTeams.length - 1;
+    } else if (indexForNextTeam <= 0 && (!firstPickDone || direction === -1)) {
+        indexForNextTeam = 0;
+    }
+
+    const nextTeamId = myTeams[indexForNextTeam].id;
     const x = teams.find(team => team.id === nextTeamId);
 
     console.log(`Team: ${x.name} up next pick order: ${x.pickOrder}`);
 
     pickingTeamId = nextTeamId;
+
+    switch (teamIndex) {
+        case 0:
+            direction = 1;
+            break;
+        case myTeams.length - 1:
+            direction = -1;
+            break;
+        default:
+            break;
+    }
+
+    firstPickDone = true;
 }
 
 console.log("Listening on port: " + port);

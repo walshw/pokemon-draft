@@ -13,8 +13,7 @@
 }
 
 .userTeam {
-    background-color: var(--sl-color-primary-200);
-    border: 2px solid var(--sl-color-primary-500);
+    border: 2px solid green;
 }
 
 .playerIconAndName {
@@ -29,4 +28,8 @@
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: end;
+}
+
+.pickingTeam {
+    background-color: var(--sl-color-primary-200);
 }
