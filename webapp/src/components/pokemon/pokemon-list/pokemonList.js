@@ -1,4 +1,3 @@
-import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlBadge from '@shoelace-style/shoelace/dist/react/badge';
 import "./pokemonList.css"
 
@@ -80,7 +79,7 @@ const PokemonList = (props) => {
       </tr>);
   }
 
-  return <SlCard className="poketable">
+  return <div className="poketable">
     <table>
       <thead>
         <tr>
@@ -100,7 +99,7 @@ const PokemonList = (props) => {
         {renderMons(props.mons)}
       </tbody>
     </table>
-  </SlCard>;
+  </div>;
 }
 
 export default PokemonList;
