@@ -93,8 +93,6 @@ const MainScreen = (props) => {
                 </div>
                 {isAdmin && <div>
                     <SlBadge variant="danger">ADMIN CONTROLS</SlBadge>
-                    <SlBadge variant={isConnect ? "success" : "neutral"}>Picking team</SlBadge>
-                    <SlBadge variant="primary">{pickingTeamId}</SlBadge>
                     <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
                     <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
                     <SlButton onClick={() => socket.emit("clearConnections")}>Kick all</SlButton>

@@ -1,6 +1,7 @@
 .main {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .game {
@@ -8,6 +9,7 @@
     flex-direction: column;
     height: 100vh;
     background-color: var(--sl-color-neutral-100);
+    flex-grow: 1;
 }
 
 .game > * {
@@ -20,4 +22,11 @@
 
 .game > sl-input {
     margin-bottom: 16px;
+}
+
+.teams {
+    border-left: 2px solid var(--sl-color-neutral-300);
+    overflow-y: scroll;
+    max-height: 100vh;
+    width: 25%;
 }
