@@ -15,7 +15,7 @@ thead {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: hsl(240, 5.9%, 11%);
+    background-color: var(--sl-color-neutral-100);
     /* Match the header background */
 }
 

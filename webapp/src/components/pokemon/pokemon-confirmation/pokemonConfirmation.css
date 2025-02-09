@@ -19,6 +19,7 @@ tbody > tr:hover {
     min-height: 80px;
     border-top: 2px solid var(--sl-color-neutral-300);
     font-size: 40px;
+    background-color: var(--sl-color-neutral-50);
 }
 
 .buttonGroup {

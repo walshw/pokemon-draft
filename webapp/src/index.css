@@ -3,7 +3,7 @@ body {
   margin: 0px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: hsl(240, 5.9%, 11%);
+  background-color: var(--sl-color-neutral-50);
 }
 
 html {
@@ -183,6 +183,7 @@ sl-button[variant="primary"]::part(label) {
 
 /* https://shoelace.style/getting-started/customizing/#css-parts */
 sl-input::part(base) {
+  background-color: var(--sl-color-neutral-100);
   font-family: "Lookout";
   border-radius: 0px;
   border-width: 2px;
