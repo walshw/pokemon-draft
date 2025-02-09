@@ -1,9 +1,11 @@
 .poketable {
     overflow-y: scroll;
+    padding-left: 70px;
 }
 
 table {
     border-collapse:collapse;
+    /* border-spacing: 8px; */
 }
 
 thead {
@@ -22,7 +24,11 @@ tr {
 }
 
 td {
-    padding: 16px;
+    padding: 8px 4px;
+}
+
+.stat {
+    text-align: center;
 }
 
 tr:first-child {

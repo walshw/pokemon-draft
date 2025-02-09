@@ -70,12 +70,12 @@ const PokemonList = (props) => {
         <td>{mon.name}</td>
         <td>{renderTypes(mon.types)}</td>
         <td>{mon.abilities.join(", ")}</td>
-        <td>{mon.hp}</td>
-        <td>{mon.atk}</td>
-        <td>{mon.def}</td>
-        <td>{mon.spa}</td>
-        <td>{mon.spd}</td>
-        <td>{mon.spe}</td>
+        <td className="stat">{mon.hp}</td>
+        <td className="stat">{mon.atk}</td>
+        <td className="stat">{mon.def}</td>
+        <td className="stat">{mon.spa}</td>
+        <td className="stat">{mon.spd}</td>
+        <td className="stat">{mon.spe}</td>
       </tr>);
   }
 

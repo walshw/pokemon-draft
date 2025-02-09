@@ -12,7 +12,6 @@
 .game {
     display: flex;
     flex-direction: row;
-    padding-left: 70px;
     overflow-y: hidden;
 }
 
