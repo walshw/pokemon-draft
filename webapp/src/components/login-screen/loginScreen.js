@@ -131,7 +131,6 @@ function LoginScreen(props) {
             <div className="loginFooter">
                 {renderPfpDisplay()}
                 <SlButton
-                    className="sl-button primary"
                     variant="primary"
                     onClick={() => handlePlayClick()}
                     disabled={!props.pfp || !holderText || holderText.trim() === ""}>

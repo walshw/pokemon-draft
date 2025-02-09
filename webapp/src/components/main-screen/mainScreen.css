@@ -30,3 +30,9 @@
     max-height: 100vh;
     width: 25%;
 }
+
+.endgame {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

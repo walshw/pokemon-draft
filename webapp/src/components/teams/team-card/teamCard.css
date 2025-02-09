@@ -6,6 +6,37 @@
     padding: 16px;
 }
 
+.endTeam {
+    display: flex;
+    flex-direction: row;
+    min-width: 200px;
+    padding: 16px;
+}
+
+.endTeam.me {
+    border: 2px solid var(--sl-color-neutral-300);
+    background-color: var(--sl-color-neutral-100);
+}
+
+
+.playerEndTeam {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.endTeamContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 75%;
+    margin: auto;
+    margin-top: 32px;
+}
+
 .playerInfo {
     display: flex;
     flex-direction: row;

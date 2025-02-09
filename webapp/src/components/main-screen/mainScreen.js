@@ -13,6 +13,7 @@ import { socket } from "../../socket";
 import "./mainScreen.css";
 import PokemonConfirmation from "../pokemon/pokemon-confirmation/pokemonConfirmation";
 import Lobby from "../lobby/lobby";
+import EndScreen from "../end-screen/endScreen";
 
 const MainScreen = (props) => {
     const myId = props.userId;
@@ -53,7 +54,6 @@ const MainScreen = (props) => {
 
     useEffect(() => {
         if (draftComplete) {
-            alert("OHHH BABY");
         }
     }, [draftComplete]);
     
@@ -84,6 +84,18 @@ const MainScreen = (props) => {
     const renderMainScreen = () => {
         if (!pickingTeamId && !isAdmin) {
             return <Lobby connections={connections}></Lobby>
+        }
+
+        if (draftComplete) {
+            return <div className="endgame">
+                {isAdmin && <div>
+                    <SlBadge variant="danger">ADMIN CONTROLS</SlBadge>
+                    <SlButton onClick={() => { socket.emit("startGame") }}>Start</SlButton>
+                    <SlButton onClick={() => socket.emit("stopGame")}>Stop</SlButton>
+                    <SlButton onClick={() => socket.emit("clearConnections")}>Kick all</SlButton>
+                </div>}
+                <EndScreen teams={teams} userId={props.userId} />
+            </div>
         }
 
         return <div className="main">
