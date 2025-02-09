@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import SlAvatar from '@shoelace-style/shoelace/dist/react/avatar';
-import SlCard from '@shoelace-style/shoelace/dist/react/card';
 import SlInput from '@shoelace-style/shoelace/dist/react/input';
 import SlButton from '@shoelace-style/shoelace/dist/react/button';
 import SlIcon from '@shoelace-style/shoelace/dist/react/icon';
@@ -110,7 +109,6 @@ function LoginScreen(props) {
     }
 
     const renderLoginForm = () => {
-
         return <div className="loginScreenContainer ">
             <SlInput
                 size="Medium"
