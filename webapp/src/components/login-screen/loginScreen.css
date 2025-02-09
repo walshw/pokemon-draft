@@ -37,15 +37,6 @@
     margin: auto;
 }
 
-/* https://shoelace.style/getting-started/customizing/#css-parts */
-.customInput::part(base) {
-    font-family: "Lookout";
-    border-radius: 8px;
-    border-width: 2px;
-    padding: 8px;
-    font-size: 32px;
-}
-
 .loginFooter {
     display: flex;
     flex-direction: row;

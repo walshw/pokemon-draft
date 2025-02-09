@@ -155,3 +155,12 @@ sl-avatar::part(base) {
 .sl-button.primary::part(label) {
   color: var(--sl-color-neutral-50 #FAFAFA);
 }
+
+/* https://shoelace.style/getting-started/customizing/#css-parts */
+sl-input::part(base) {
+  font-family: "Lookout";
+  border-radius: 8px;
+  border-width: 2px;
+  padding: 8px;
+  font-size: 32px;
+}
