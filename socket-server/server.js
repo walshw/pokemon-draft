@@ -36,6 +36,17 @@ let draftComplete = false;
 let direction = 1;
 let firstPickDone = false;
 
+const writeTeamToFile = () => {
+    const outputJson = teams.map(team => {
+        return {
+            name: team.name,
+            mons: team.mons.map(mon => mon.name),
+        }
+    });
+
+    writeFileSync("errorDrafts/lastPick.json", JSON.stringify(outputJson, null, "\t"));
+}
+
 io.on("connection", (socket) => {
     const userId = socket.handshake.auth.userId;
     const roomName = "demoRoom";
@@ -177,6 +188,8 @@ io.on("connection", (socket) => {
         }
 
         emitGameState(roomName);
+
+        writeTeamToFile();
 
         return callback(true);
     });
