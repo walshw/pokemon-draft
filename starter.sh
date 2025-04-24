@@ -11,7 +11,7 @@ do
     clear
     CONSOLE_WIDTH="$(tput cols)"
     pr -m -t -w $CONSOLE_WIDTH -s" | " webapplog.txt serverlog.txt | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g'
-    echo -e "\n🤚🛑ctrl+c quit 🃏"
+    echo -e "\n🤚🛑(ctrl/cmd)+c quit 🃏"
     sleep 3
 done
 wait
