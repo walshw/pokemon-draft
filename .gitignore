@@ -5,4 +5,3 @@
 /scraping/smogon-data/output/*
 /socket-server/completedDrafts/*
 /socket-server/errorDrafts/*
-.env
