@@ -1,0 +1,9 @@
+{
+  "name": "pokemon-draft",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "bash ./starter.sh",
+    "install": "bash ./installer.sh"
+  }
+}
