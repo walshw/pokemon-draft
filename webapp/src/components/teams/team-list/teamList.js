@@ -1,5 +1,4 @@
 import TeamCard from '../team-card/teamCard';
-
 import "./teamlist.css";
 
 const TeamList = (props) => {
