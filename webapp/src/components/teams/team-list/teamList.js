@@ -1,4 +1,4 @@
-import TeamCard from '../team-card/teamcard';
+import TeamCard from '../team-card/teamCard';
 
 import "./teamlist.css";
 

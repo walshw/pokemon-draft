@@ -1,5 +1,3 @@
-import TeamCard from "../teams/team-card/teamcard";
-import TeamList from "../teams/team-list/teamList";
 import SlAvatar from '@shoelace-style/shoelace/dist/react/avatar';
 import SlButton from '@shoelace-style/shoelace/dist/react/button';
 import SlIcon from '@shoelace-style/shoelace/dist/react/icon';
