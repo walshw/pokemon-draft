@@ -7,7 +7,7 @@ configDotenv();
 
 const port = 10310;
 
-const teamMonMax = 5;
+const teamMonMax = 10;
 
 const io = new Server({
     cors: {

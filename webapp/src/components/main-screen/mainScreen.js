@@ -18,7 +18,7 @@ import EndScreen from "../end-screen/endScreen";
 const MainScreen = (props) => {
     const myId = props.userId;
     // TODO: This is a security flaw, but since its local. Some goon has to deliberately look this up.
-    const isAdmin = ["wgb", "Berry", "Cat"].includes(props.userId);
+    const isAdmin = ["Berry", "The Walshster", "wgb", "Cat"].includes(props.userId);
     const myPfp = props.pfp;
 
     // Socket state variables

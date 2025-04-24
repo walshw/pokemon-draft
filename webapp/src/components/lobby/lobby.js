@@ -24,7 +24,7 @@ const Lobby = (props) => {
     const renderRow = (address, id, pickOrder) => {
         if (isAdmin) {
             return <div>
-                {address} | {id}
+                {id}
                 <SlInput
                     type="number"
                     value={pickOrder}
