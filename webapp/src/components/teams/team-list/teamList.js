@@ -1,5 +1,5 @@
 import TeamCard from '../team-card/teamCard';
-import "./teamlist.css";
+import "./teamList.css";
 
 const TeamList = (props) => {
     const renderTeamCards = (teams) => {
