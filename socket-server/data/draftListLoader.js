@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 
 const loadAndTrimJson = () => {
-    const data = readFileSync(new URL("../../scraping/smogon-data/output/gen7DraftSheet.json", import.meta.url));
+    const data = readFileSync(new URL("gen7DraftSheet.json", import.meta.url));
     const json = JSON.parse(data);
 
     const draftList = [];
